@@ -1,0 +1,5 @@
+.profile__info {
+  display: grid;
+  max-width: 336px;
+  margin: 25px auto 25px 30px;
+}
