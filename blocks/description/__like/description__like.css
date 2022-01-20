@@ -1,0 +1,14 @@
+.description__like {
+  background-image: url(../../../images/like.svg);
+  background-color: white;
+  border: none;
+  width: 22px;
+  height: 19px;
+  margin: 5px 5px 0 auto;
+}
+
+.description__like:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 0.3s;
+}

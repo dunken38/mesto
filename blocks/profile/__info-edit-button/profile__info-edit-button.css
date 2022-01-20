@@ -1,11 +1,32 @@
 .profile__info-edit-button {
   background-image: url(../../../images/editbutton.svg);
   background-color: black;
+  background-size: cover;
   border: none;
   width: 24px;
   height: 24px;
+  vertical-align: top;
+  margin-top: 15px;
 }
 
 .profile__info-edit-button:hover {
   cursor: pointer;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+@media screen and (max-width: 894px) {
+  .profile__info-edit-button {
+    margin-top: 12px;
+    width: 21px;
+    height: 21px;
+  }
+}
+
+@media screen and (max-width: 596px) {
+  .profile__info-edit-button {
+    margin-top: 8px;
+    width: 18px;
+    height: 18px;
+  }
 }

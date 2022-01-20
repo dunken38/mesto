@@ -1,17 +1,24 @@
 .profile__info-title {
-  margin: 0 0 16px;
+  margin-right: 18px;
   color: white;
   font-family: 'Inter', 'Corbel', sans-serif;
   font-style: normal;
   font-weight: normal;
   line-height: 114%;
   font-size: 42px;
+  display: inline;
 }
 
-/*@media screen and (max-width: 767px) {
-  .intro__title {
-    width: 80%;
-    line-height: 109%;
-    font-size: 32px;
+@media screen and (max-width: 894px) {
+  .profile__info-title {
+    margin-right: 12px;
+    font-size: 35px;
   }
-}*/
+}
+
+@media screen and (max-width: 596px) {
+  .profile__info-title {
+    margin: 0 10px 0 28px;
+    font-size: 27px;
+  }
+}

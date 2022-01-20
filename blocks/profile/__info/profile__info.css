@@ -1,5 +1,19 @@
-.profile__info {
-  display: grid;
-  max-width: 336px;
-  margin: 25px auto 25px 30px;
+.profile__info { 
+  width: 336px;
+  margin: 22px auto 25px 30px;
+}
+
+@media screen and (max-width: 894px) {
+  .profile__info {
+    max-width: 305px;
+    margin: 16px auto 18px 24px;
+  }
+}
+
+@media screen and (max-width: 596px) {
+  .profile__info {
+    width: 282px;
+    margin: 26px auto 36px;
+    text-align: center;
+  }
 }
