@@ -17,9 +17,9 @@
     <section class="profile">
       <img src="images/kusto.png" class="profile__avatar" alt="Изображение Жак-Ив Кусто">
       <div class="profile__info">
-        <h2 class="profile__info-title">Жак-Ив Кусто</h2>
+        <h2 class="profile__info-name">Жак-Ив</h2>
         <button class="profile__info-edit-button"></button>
-        <p class="profile__info-about">Исследователь океана</p>
+        <p class="profile__info-about">Исследователь</p>
       </div>
       <button class="profile__add-button"></button>
     </section>
@@ -30,42 +30,42 @@
           <img src="images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="Изображение Карачаевска">
           <div class="description">
             <h5 class="description__text">Карачаевск</h5>
-            <button class="description__like"></button>
+            <button class="description__like description__like_noactive"></button>
           </div>
         </li>
         <li class="element">
           <img src="images/kirill-pershin-1404681-unsplash.jpg" class="element__image" alt="Изображение Горы Эльбрус">
           <div class="description">
             <h5 class="description__text">Гора Эльбрус</h5>
-            <button class="description__like"></button>
+            <button class="description__like description__like_noactive"></button>
           </div>
         </li>
         <li class="element">
           <img src="images/kirill-pershin-1556355-unsplash.jpg" class="element__image" alt="Изображение Домбая">
           <div class="description">
             <h5 class="description__text">Домбай</h5>
-            <button class="description__like"></button>
+            <button class="description__like description__like_noactive"></button>
           </div>
         </li>
         <li class="element">
           <img src="images/kirill-pershin-1404681-unsplash.jpg" class="element__image" alt="Изображение Горы Эльбрус">
           <div class="description">
             <h5 class="description__text">Гора Эльбрус</h5>
-            <button class="description__like"></button>
+            <button class="description__like description__like_noactive"></button>
           </div>
         </li>
         <li class="element">
           <img src="images/kirill-pershin-1556355-unsplash.jpg" class="element__image" alt="Изображение Домбая">
           <div class="description">
             <h5 class="description__text">Домбай</h5>
-            <button class="description__like"></button>
+            <button class="description__like description__like_noactive"></button>
           </div>
         </li>
         <li class="element">
           <img src="images/kirill-pershin-1088404-unsplash.jpg" class="element__image" alt="Изображение Карачаево-Черкессии">
           <div class="description">
             <h5 class="description__text">Карачаево-Черкессия</h5>
-            <button class="description__like"></button>
+            <button class="description__like description__like_noactive"></button>
           </div>
         </li>
       </ul>
@@ -76,5 +76,10 @@
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
 
+  <script src="./scripts/like.js"></script>
+  <script src="./scripts/edit-button.js"></script>
+  <script src="./scripts/save-button.js"></script>
+  
+  <!--здесь должен был быть cancel-button.js, но хз как его правильно подключить к insertAdjacentHTML в edit-button.js, а по итогу понял что надо обернуть cancel в form и форма сама схлапывается (+3ч)-->
 </body>
 </html>

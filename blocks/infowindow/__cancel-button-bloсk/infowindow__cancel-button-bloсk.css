@@ -1,0 +1,18 @@
+.infowindow__cancel-button-block {
+  max-width: 430px;
+  margin: 155px auto 0;
+}
+
+@media screen and (max-width: 894px) {
+  .infowindow__cancel-button-block {
+    width: 380px;
+    margin-top: 128px;
+  }
+}
+
+@media screen and (max-width: 596px) {
+  .infowindow__cancel-button-block {
+    width: 282px;
+    margin-top: 87px;
+  }
+}

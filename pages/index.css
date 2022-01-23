@@ -9,13 +9,23 @@
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__info-about/profile__info-about.css);
 @import url(../blocks/profile/__info-edit-button/profile__info-edit-button.css);
-@import url(../blocks/profile/__info-title/profile__info-title.css);
+@import url(../blocks/profile/__info-name/profile__info-name.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/description/description.css);
 @import url(../blocks/description/__text/description__text.css);
 @import url(../blocks/description/__like/description__like.css);
+@import url(../blocks/description/__like/_noactive/description__like_noactive.css);
+@import url(../blocks/description/__like/_active/description__like_active.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
-
+@import url(../blocks/infowindow/infowindow.css);
+@import url(../blocks/infowindow/_hide/infowindow_hide.css);
+@import url(../blocks/infowindow/__content/infowindow__content.css);
+@import url(../blocks/infowindow/__about/infowindow__about.css);
+@import url(../blocks/infowindow/__cancel-button/infowindow__cancel-button.css);
+@import url(../blocks/infowindow/__cancel-button-bloсk/infowindow__cancel-button-bloсk.css);
+@import url(../blocks/infowindow/__save-button/infowindow__save-button.css);
+@import url(../blocks/infowindow/__name/infowindow__name.css);
+@import url(../blocks/infowindow/__title/infowindow__title.css);

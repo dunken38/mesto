@@ -1,0 +1,25 @@
+.infowindow__content {
+  width: 430px;
+  height: 330px;
+  background-color: white;
+  border-radius: 10px;
+  margin: 8px auto 0;
+  box-shadow: 0 0 25px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 894px) {
+  .infowindow__content {
+    width: 380px;
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 596px) {
+  .infowindow__content {
+    width: 282px;
+    height: 322px;
+    margin-top: 16px;
+  }
+}

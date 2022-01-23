@@ -1,4 +1,4 @@
-.profile__info-title {
+.profile__info-name {
   margin-right: 18px;
   color: white;
   font-family: 'Inter', 'Corbel', sans-serif;
@@ -10,14 +10,14 @@
 }
 
 @media screen and (max-width: 894px) {
-  .profile__info-title {
+  .profile__info-name {
     margin-right: 12px;
     font-size: 35px;
   }
 }
 
 @media screen and (max-width: 596px) {
-  .profile__info-title {
+  .profile__info-name {
     margin: 0 10px 0 28px;
     font-size: 27px;
   }

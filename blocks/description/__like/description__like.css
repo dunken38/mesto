@@ -1,10 +1,10 @@
 .description__like {
-  background-image: url(../../../images/like.svg);
   background-color: white;
   border: none;
   width: 22px;
   height: 19px;
   margin: 5px 5px 0 auto;
+  transition: 0.3s;  
 }
 
 .description__like:hover {

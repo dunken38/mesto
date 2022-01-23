@@ -1,0 +1,28 @@
+.infowindow__about {
+  width: 358px;
+  margin: 0 auto 48px;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  font-family: 'Inter', 'Corbel', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 120%;
+  font-size: 14px;
+}
+
+.infowindow__about:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 894px) {
+  .infowindow__about {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 596px) {
+  .infowindow__about {
+    width: 238px;
+    margin-bottom: 45px;
+  }
+}

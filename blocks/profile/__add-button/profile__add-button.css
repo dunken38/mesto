@@ -5,6 +5,7 @@
   border: none;
   width: 150px;
   height: 50px;
+  transition: 0.3s;
 }
 
 .profile__add-button:hover {
