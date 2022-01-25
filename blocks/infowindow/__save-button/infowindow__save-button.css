@@ -10,6 +10,14 @@
   font-weight: normal;
   line-height: 120%;
   font-size: 18px;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+.infowindow__save-button:hover  {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.3s;
 }
 
 @media screen and (max-width: 894px) {

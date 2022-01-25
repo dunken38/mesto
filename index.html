@@ -6,13 +6,10 @@
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto Russia</title>
 </head>
-
 <body class="page">
-
   <header class="header">
     <div class="header__logo"></div>
   </header>
-  
   <main>
     <section class="profile">
       <img src="images/kusto.png" class="profile__avatar" alt="Изображение Жак-Ив Кусто">
@@ -23,7 +20,19 @@
       </div>
       <button class="profile__add-button"></button>
     </section>
-
+    <section><!--тут хранится окошко infowindow для правки данных в profile выше-->
+      <div class="infowindow infowindow_hide">
+        <form class="infowindow__cancel-button-block">
+          <button class="infowindow__cancel-button" title="Отмена"></button>
+        </form>
+        <form class="infowindow__content">
+          <h2 class="infowindow__title">Редактировать профиль</h2>
+          <input type="text" value="Жак-Ив Кусто" class="infowindow__name"></input>
+          <input type="text" value="Исследователь океана" class="infowindow__about"></input>
+          <button type="submit" class="infowindow__save-button">Сохранить</button>
+        </form>
+      </div>
+    </section>
     <section>
       <ul class="elements">
         <li class="element">
@@ -71,15 +80,11 @@
       </ul>
     </section>
   </main>
-
   <footer class="footer">
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
 
   <script src="./scripts/like.js"></script>
-  <script src="./scripts/edit-button.js"></script>
-  <script src="./scripts/save-button.js"></script>
-  
-  <!--здесь должен был быть cancel-button.js, но хз как его правильно подключить к insertAdjacentHTML в edit-button.js, а по итогу понял что надо обернуть cancel в form и форма сама схлапывается (+3ч)-->
+  <script src="./scripts/buttons.js"></script>
 </body>
 </html>
