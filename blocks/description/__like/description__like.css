@@ -1,5 +1,6 @@
 .description__like {
   background-color: white;
+  background-image: url(../../../images/likenoactive.svg);
   border: none;
   width: 22px;
   height: 19px;

@@ -1,6 +1,6 @@
-.infowindow__about {
+.popup__input {
   width: 358px;
-  margin: 0 auto 48px;
+  margin: 0 auto;
   border: none;
   border-bottom: 1px solid rgba(0,0,0,.2);
   font-family: 'Inter', 'Corbel', sans-serif;
@@ -10,19 +10,18 @@
   font-size: 14px;
 }
 
-.infowindow__about:focus {
+.popup__input:focus {
   outline: none;
 }
 
 @media screen and (max-width: 894px) {
-  .infowindow__about {
+  .popup__input {
     width: 300px;
   }
 }
 
 @media screen and (max-width: 596px) {
-  .infowindow__about {
+  .popup__input {
     width: 238px;
-    margin-bottom: 45px;
   }
 }

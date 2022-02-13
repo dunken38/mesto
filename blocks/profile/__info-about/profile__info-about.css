@@ -1,11 +1,12 @@
 .profile__info-about {
-  margin: 16px auto 0;
+  margin: 16px 0 0;
   color: white;
   font-family: 'Inter', 'Corbel', sans-serif;
   font-style: normal;
   font-weight: normal;
   line-height: 120%;
   font-size: 18px;
+  overflow-wrap: anywhere;
 }
 
 @media screen and (max-width: 894px) {

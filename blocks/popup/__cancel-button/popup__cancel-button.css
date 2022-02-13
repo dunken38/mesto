@@ -1,0 +1,33 @@
+.popup__cancel-button  {
+  background-image: url(../../../images/cancelbutton.svg);
+  background-color: transparent;
+  background-size: cover;
+  border: none;
+  width: 32px;
+  height: 32px;
+  align-self: flex-end;
+  margin-right: -20px;
+  transition: 0.3s;
+}
+
+.popup__cancel-button:hover  {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+@media screen and (max-width: 894px) {
+  .popup__cancel-button  {
+    width: 26px;
+    height: 26px;
+    margin-right: -7px;
+  }
+}
+
+@media screen and (max-width: 596px) {
+  .popup__cancel-button  {
+    width: 20px;
+    height: 20px;
+    margin-right: 0;
+  }
+}

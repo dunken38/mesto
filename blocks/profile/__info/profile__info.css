@@ -1,6 +1,8 @@
 .profile__info { 
+  display: grid;
   width: 346px;
   margin: 22px auto 25px 30px;
+  grid-template-columns: auto 24px;
 }
 
 @media screen and (max-width: 894px) {

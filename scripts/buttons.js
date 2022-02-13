@@ -1,30 +1,31 @@
-//тут делаем обработку кнопки edit
-let page = document.querySelector('.page');
-let editButton = document.querySelector('.profile__info-edit-button');
-let infoWindow = page.querySelector('.infowindow');
-function profileInfoWindow() {
-  infoWindow.classList.remove('infowindow_hide');
-}
-editButton.addEventListener('click',profileInfoWindow); //открываем окошко infowindow по клику на edit
+//объявляем переменные
+const page = document.querySelector('.page');
+const editButton = document.querySelector('.profile__info-edit-button');
+const popup = page.querySelector('.popup');
+const popupEditForm = popup.querySelector('.popup__edit-form');
+const cancelButton = page.querySelector('.popup__cancel-button');
+const profileInfoName = page.querySelector('.profile__info-name');
+const profileInfoAbout = page.querySelector('.profile__info-about');
+const inputName = popupEditForm.querySelector('.popup__input_name');
+const inputAbout = popupEditForm.querySelector('.popup__input_about');
 
-//дальше пытаемся сделать кнопку cancel
-let cancelButton = page.querySelector('.infowindow__cancel-button');
-function hideProfileInfoWindow(evt) {
-  evt.preventDefault();
-  infoWindow.classList.add('infowindow_hide');
+//тут делаем добавление и удаление классов popup.* для появления и закрытия окошка
+const popupOpenClose = () => {
+  popup.classList.toggle('popup_active');
+  popup.classList.toggle('popup');
+  inputName.value = profileInfoName.textContent; //получаем данные в форму из информации со страницы
+  inputAbout.value = profileInfoAbout.textContent;
 }
-cancelButton.addEventListener('click',hideProfileInfoWindow); //закрываем окошко infowindow по клику на крестик
 
-//и дальше кнопку save с заменой полей из infowindow в profile
-let profileInfoName = page.querySelector('.profile__info-name');
-let profileInfoAbout = page.querySelector('.profile__info-about');
-let inputName = page.querySelector('.infowindow__name');
-let inputAbout = page.querySelector('.infowindow__about');
-let saveButton = page.querySelector('.infowindow__save-button');
-function getValueOfInput(evt) {
+//и дальше кнопку save с заменой полей из popup в profile
+const getValueOfInput = (evt) => { 
   evt.preventDefault();
   profileInfoName.textContent = inputName.value;
   profileInfoAbout.textContent = inputAbout.value;
-  infoWindow.classList.add('infowindow_hide');
+  popupOpenClose(); //тут закрываем форму без отправки на сервер
 }
-saveButton.addEventListener('click',getValueOfInput); //закрываем окошко infowindow по клику на Сохранить
+
+//слушатели
+editButton.addEventListener('click',popupOpenClose); //открываем окошко popup по клику на edit
+cancelButton.addEventListener('click',popupOpenClose); //закрываем окошко popup по клику на крестик
+popupEditForm.addEventListener('submit',getValueOfInput,false); //закрываем окошко popup по клику на Сохранить.False добавлен для того чтобы форма не обновлялась.

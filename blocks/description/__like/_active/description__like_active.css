@@ -1,7 +1,0 @@
-.description__like_active {
-  background-image: url(../../../../images/likeactive.svg);
-}
-
-.description__like_active:hover {
-  opacity: 0.8; /*с opacity 0.5 как на некативном лайке активный выглядит не очень,поэтому сделал прозрачность поменьше для активного*/
-}
