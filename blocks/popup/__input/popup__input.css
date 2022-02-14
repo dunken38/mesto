@@ -8,6 +8,7 @@
   font-weight: normal;
   line-height: 120%;
   font-size: 14px;
+  padding-bottom: 9px;
 }
 
 .popup__input:focus {

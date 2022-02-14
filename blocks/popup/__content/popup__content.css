@@ -1,7 +1,7 @@
 .popup__content {
   width: 100%;
   max-width: 470px;
-  margin: 155px auto 0;
+  margin: 155px auto 0; /*тут сделана центровка белого окошка в т.ч.,т.к. крестик уходит вправо за текущее окошко и белое остается в центре */
   display: flex;
   flex-direction: column;
 }
