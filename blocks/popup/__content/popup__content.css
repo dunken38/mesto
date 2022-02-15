@@ -1,21 +1,24 @@
 .popup__content {
   width: 100%;
-  max-width: 470px;
-  margin: 155px auto 0; /*тут сделана центровка белого окошка в т.ч.,т.к. крестик уходит вправо за текущее окошко и белое остается в центре */
+  max-width: 430px;  
   display: flex;
   flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  margin: 8px auto 0;
+  box-shadow: 0 0 25px rgba(0,0,0,0.15);
+  text-align: center;
+  position: relative; /*относительная позиция чтобы крестик был всегда привязан к белому окошку*/
 }
 
 @media screen and (max-width: 894px) {
   .popup__content {
-    max-width: 400px;
-    margin-top: 128px;
+    max-width: 380px;
   }
 }
 
 @media screen and (max-width: 596px) {
   .popup__content {
     max-width: 282px;
-    margin-top: 87px;
   }
 }
