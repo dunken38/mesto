@@ -7,7 +7,8 @@
   height: 19px;
   top: 20px;
   right: 20px;
-  transition: 0.3s;  
+  transition: 0.3s;
+  outline: 1px red solid;
 }
 
 .element__trash:hover {
