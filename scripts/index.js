@@ -1,4 +1,5 @@
 //объявляем переменные
+  //сначала блок для popup
 const popupTemplate = document.querySelector('#popupTemplate').content.cloneNode(true); //забираем template для двух окошек edit и add
 const popup = popupTemplate.querySelector('.popup');
 const editButton = document.querySelector('.profile__info-edit-button');
@@ -12,14 +13,18 @@ const inputName = popupEditForm.querySelector('[name=input-name]');
 const inputAbout = popupEditForm.querySelector('[name=input-about]');
 const saveButton = popup.querySelector('.popup__save-button'); 
 const popupWindow = document.querySelector('.popup-window');
-popupWindow.append(popupTemplate);
+const likeState = document.querySelectorAll('.element__like'); //для функционала по лайкам
+popupWindow.append(popupTemplate); //добавляем то что получилось в popup в зависимости от нажатой кнопки (edit or add)
+  //теперь блок для gallery (карточек)
+const gallery = document.querySelector('#gallery').content.cloneNode(true); //забираем template для карточек
 
+//теперь пишем функции
 //закрываем окошко popup
 const popupClose = () => {
   popup.classList.remove('popup_active');
 }
 
-//и дальше кнопку save с заменой полей из popup в profile
+//кнопка save с заменой полей из popup в profile
 const getValueOfInput = (evt) => { 
   evt.preventDefault();
   profileInfoName.textContent = inputName.value;
@@ -56,6 +61,11 @@ const popupOpenOnAddButton = () => {
   popupEditForm.addEventListener('submit',addElement,false);
 }
 
+//слушатели кнопок
+editButton.addEventListener('click',popupOpenOnEditButton); //открываем окошко popup по клику на edit
+addButton.addEventListener('click',popupOpenOnAddButton); //открываем окошко popup по клику на add
+cancelButton.addEventListener('click',popupClose); //закрываем окошко popup по клику на крестик
+
 /*
 const initialCards = [
   {
@@ -85,7 +95,14 @@ const initialCards = [
 ]; 
 */
 
-//слушатели
-editButton.addEventListener('click',popupOpenOnEditButton); //открываем окошко popup по клику на edit
-addButton.addEventListener('click',popupOpenOnAddButton); //открываем окошко popup по клику на add
-cancelButton.addEventListener('click',popupClose); //закрываем окошко popup по клику на крестик
+//лайки
+for (let i = 0; i < likeState.length; i++){
+  likeState[i].addEventListener('click', () => {  
+    if (!likeState[i].classList.contains('element__like_active')) {
+      likeState[i].classList.add('element__like_active');
+    }
+    else {
+      likeState[i].classList.remove('element__like_active');   
+    } 
+  });
+};

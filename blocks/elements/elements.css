@@ -3,7 +3,7 @@
   max-width: 880px;
   margin: 0 auto 67px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 282px); /*тут не совсем понял комментарий: Карточкам не стоит строго фиксировать высоту. Возможно имелось ввиду ширину,но тогда я не смогу приблизиться к макету (?) Пока остается подвешенным*/
+  grid-template-columns: repeat(auto-fill, 282px);
   gap: 20px 16px;
   justify-content: center;
   list-style-type: none;
