@@ -15,13 +15,12 @@ const saveButton = popup.querySelector('.popup__save-button');
 const popupWindow = document.querySelector('.popup-window');
 popupWindow.append(popupTemplate); //добавляем то что получилось в popup в зависимости от нажатой кнопки (edit or add)
   //теперь блок для gallery (карточек)
-const galleryTemplate = document.querySelector('#gallery').content.cloneNode(true); //забираем template для карточек
-const galleryImage = galleryTemplate.querySelector('.element__image');
-const galleryText = galleryTemplate.querySelector('.element__text');
 const galleryElements = document.querySelector('.elements');
 const emptyCards = document.querySelector('.element__empty-cards'); //чтобы убирать надпись "Добавьте карточку"
-const galleryTrashButton = galleryTemplate.querySelectorAll('.element__trash'); //для функционала по корзине
-const likeState = galleryTemplate.querySelectorAll('.element__like'); //для функционала по лайкам
+const galleryTemplate = document.querySelector('#gallery').content; //забираем template для карточек
+const galleryImage = galleryTemplate.querySelector('.element__image');
+const galleryText = galleryTemplate.querySelector('.element__text');
+
 //объект с элементами карточек
 const initialCards = [
   {
@@ -65,25 +64,36 @@ const getValueOfInput = (evt) => {
 }
 
 //вставляем карточку
-const addElement = (evt) => { 
+const addElement = (evt) =>{ 
   evt.preventDefault();
-  emptyCards.remove();
   galleryText.textContent = inputName.value;
   galleryImage.src = inputAbout.value;
-  galleryElements.append(galleryTemplate);
-  popupClose(); //тут закрываем форму без отправки на сервер
-  console.log(galleryElements);
-}
+  const galleryElement = galleryTemplate.querySelector('.element').cloneNode(true);
+  galleryElements.prepend(galleryElement);
+  const likeState = galleryElement.querySelector('.element__like'); //для функционала по лайкам
+  likeState.addEventListener('click', function(event){ //лайки со слушателем
+    event.target.classList.toggle('element__like_active');
+  });
+  const element = document.querySelectorAll('.element');
+  const galleryTrashButton = document.querySelectorAll('.element__trash'); //для функционала по корзине
+  
+    for (let i = 0; i < element.length; i++) {    
+      galleryTrashButton[i].addEventListener('click',function(){
+        element[i].remove();
+        if (galleryElements.children.length == 0) { //тут проверяем не удалены ли все карточки чтобы показать надпись emptyCards
+          galleryElements.append(emptyCards);
+        }
+      });
+    }
 
-//удаляем карточку
-const deleteElement = () => {
-  const closeDelElement = galleryTrashButton.closest('.element');
-  console.log(closeDelElement);
-  closeDelElement.remove();
-  if (galleryElements.children.length == 0) {
-    galleryElements.append(emptyCards);
-  }
-  console.log(galleryElements);
+  if (emptyCards) { //тут проверяем если emptyCards присутствует,то удаляем его при добавлении карточки
+    emptyCards.remove();
+  }  
+
+  //galleryTemplate.cloneNode(true);
+  popupClose(); //тут закрываем форму без отправки на сервер
+  console.log(element.length);
+  console.log(galleryTrashButton.length);
 }
 
 //что происходит при нажатии на кнопку Edit
@@ -111,20 +121,9 @@ const popupOpenOnAddButton = () => {
   popupEditForm.addEventListener('submit',addElement,false);
 }
 
-//лайки со слушателем
-for (let i = 0; i < likeState.length; i++){
-  likeState[i].addEventListener('click', () => {  
-    if (!likeState[i].classList.contains('element__like_active')) {
-      likeState[i].classList.add('element__like_active');
-    }
-    else {
-      likeState[i].classList.remove('element__like_active');   
-    } 
-  });
-};
-
 //слушатели кнопок
 editButton.addEventListener('click',popupOpenOnEditButton); //открываем окошко popup по клику на edit
 addButton.addEventListener('click',popupOpenOnAddButton); //открываем окошко popup по клику на add
 cancelButton.addEventListener('click',popupClose); //закрываем окошко popup по клику на крестик
+
 
