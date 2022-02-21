@@ -64,10 +64,9 @@ const getValueOfInput = (evt) => {
 }
 
 //вставляем карточку
-const addElement = (evt) =>{ 
-  evt.preventDefault();
-  galleryText.textContent = inputName.value;
-  galleryImage.src = inputAbout.value;
+const addElement = (name,link) =>{ 
+  galleryText.textContent = name;
+  galleryImage.src = link;
   const galleryElement = galleryTemplate.querySelector('.element').cloneNode(true);
   galleryElements.prepend(galleryElement);
   const likeState = galleryElement.querySelector('.element__like'); //для функционала по лайкам
@@ -76,7 +75,6 @@ const addElement = (evt) =>{
   });
   const element = document.querySelectorAll('.element');
   const galleryTrashButton = document.querySelectorAll('.element__trash'); //для функционала по корзине
-  
     for (let i = 0; i < element.length; i++) {    
       galleryTrashButton[i].addEventListener('click',function(){
         element[i].remove();
@@ -85,21 +83,21 @@ const addElement = (evt) =>{
         }
       });
     }
-
   if (emptyCards) { //тут проверяем если emptyCards присутствует,то удаляем его при добавлении карточки
     emptyCards.remove();
   }  
-
-  //galleryTemplate.cloneNode(true);
   popupClose(); //тут закрываем форму без отправки на сервер
-  console.log(element.length);
-  console.log(galleryTrashButton.length);
+}
+
+for (let i = 0; i < initialCards.length; i++){ //тут карточки из готового массива выше
+  addElement(initialCards[i].name,initialCards[i].link);
 }
 
 //что происходит при нажатии на кнопку Edit
 const popupOpenOnEditButton = () => {
-  popupTitle.textContent = 'Редактировать профиль';
-  saveButton.textContent = 'Сохранить';
+  popupEditForm.removeEventListener('submit', addElementAndPreventDefault, false);
+  popupTitle.textContent = "Редактировать профиль";
+  saveButton.textContent = "Сохранить";
   inputName.placeholder = "Введите ваше имя";
   inputAbout.placeholder = "Напишите Ваши увлечения";
   inputName.value = profileInfoName.textContent; //получаем данные в форму из информации со страницы
@@ -108,17 +106,22 @@ const popupOpenOnEditButton = () => {
   popupEditForm.addEventListener('submit',getValueOfInput,false); //закрываем окошко popup по клику на Сохранить.False добавлен для того чтобы форма не обновлялась.
 }
 
+const addElementAndPreventDefault = (evt) => { //тут вынесли функцию со слушателя submit в окошке add чтобы корректно пользоваться добавлением и отменой слушателя
+  evt.preventDefault();
+  addElement(inputName.value,inputAbout.value);
+}
+
 //что происходит при нажатии на кнопку Add
 const popupOpenOnAddButton = () => {
   popupEditForm.removeEventListener('submit',getValueOfInput,false); //удаляем слушатель из popupOpenOnEditButton
   inputName.value = '';
   inputAbout.value = '';
-  popupTitle.textContent = 'Новое место';
-  saveButton.textContent = 'Создать';
+  popupTitle.textContent = "Новое место";
+  saveButton.textContent = "Создать";
   inputName.placeholder = "Название";
   inputAbout.placeholder = "Ссылка на картинку";
   popup.classList.add('popup_active');
-  popupEditForm.addEventListener('submit',addElement,false);
+  popupEditForm.addEventListener('submit', addElementAndPreventDefault, false);
 }
 
 //слушатели кнопок
