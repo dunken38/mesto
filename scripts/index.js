@@ -7,6 +7,7 @@ const addButton = document.querySelector('.profile__add-button');
 const popupEditForm = popup.querySelector('[name=popup-edit-form]'); //отбор всех form сделал по именам чтобы удалить лишние классы
 const cancelButton = popup.querySelector('.popup__cancel-button');
 const popupTitle = popup.querySelector('.popup__title');
+const popupContent = popup.querySelector('.popup__content');
 const profileInfoName = document.querySelector('.profile__info-name');
 const profileInfoAbout = document.querySelector('.profile__info-about');
 const inputName = popupEditForm.querySelector('[name=input-name]'); 
@@ -20,6 +21,7 @@ const emptyCards = document.querySelector('.element__empty-cards'); //чтобы
 const galleryTemplate = document.querySelector('#gallery').content; //забираем template для карточек
 const galleryImage = galleryTemplate.querySelector('.element__image');
 const galleryText = galleryTemplate.querySelector('.element__text');
+
 
 //объект с элементами карточек
 const initialCards = [
@@ -124,9 +126,29 @@ const popupOpenOnAddButton = () => {
   popupEditForm.addEventListener('submit', addElementAndPreventDefault, false);
 }
 
+//что происходит при нажатии на картинку
+
+const imageFromGallery = document.querySelectorAll('.element__image'); //увеличиваем картинки
+console.log(imageFromGallery.length);
+for (i = 0; i < imageFromGallery.length; i++){
+  imageFromGallery[i].addEventListener('click',() => {
+    popupEditForm.removeEventListener('submit',getValueOfInput,false); //удаляем слушатель из popupOpenOnEditButton
+    popupEditForm.removeEventListener('submit', addElementAndPreventDefault, false);
+    saveButton.remove();
+    popupEditForm.remove();
+    const bigImage = document.createElement('img');
+    bigImage[i].src = imageFromGallery[i].src;
+    popupContent[i].append(bigImage[i]);
+    popup.classList.add('popup_active');
+    console.log(imageFromGallery[i].src);
+  });
+}
+
 //слушатели кнопок
 editButton.addEventListener('click',popupOpenOnEditButton); //открываем окошко popup по клику на edit
 addButton.addEventListener('click',popupOpenOnAddButton); //открываем окошко popup по клику на add
 cancelButton.addEventListener('click',popupClose); //закрываем окошко popup по клику на крестик
+
+
 
 
