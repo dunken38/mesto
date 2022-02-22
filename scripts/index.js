@@ -7,7 +7,8 @@ const addButton = document.querySelector('.profile__add-button');
 const popupEditForm = popup.querySelector('[name=popup-edit-form]'); //отбор всех form сделал по именам чтобы удалить лишние классы
 const cancelButton = popup.querySelector('.popup__cancel-button');
 const popupTitle = popup.querySelector('.popup__title');
-const popupContent = popup.querySelector('.popup__content');
+
+const popupImage = popup.querySelector('.popup__image');
 const profileInfoName = document.querySelector('.profile__info-name');
 const profileInfoAbout = document.querySelector('.profile__info-about');
 const inputName = popupEditForm.querySelector('[name=input-name]'); 
@@ -21,6 +22,8 @@ const emptyCards = document.querySelector('.element__empty-cards'); //чтобы
 const galleryTemplate = document.querySelector('#gallery').content; //забираем template для карточек
 const galleryImage = galleryTemplate.querySelector('.element__image');
 const galleryText = galleryTemplate.querySelector('.element__text');
+const popupContentDocument = document.querySelector('.popup__content');
+
 
 
 //объект с элементами карточек
@@ -56,7 +59,6 @@ const initialCards = [
 const popupClose = () => {
   popup.classList.remove('popup_active');
 }
-
 //кнопка save с заменой полей из popup в profile
 const getValueOfInput = (evt) => { 
   evt.preventDefault();
@@ -64,6 +66,9 @@ const getValueOfInput = (evt) => {
   profileInfoAbout.textContent = inputAbout.value;
   popupClose(); //тут закрываем форму без отправки на сервер
 }
+
+//что происходит при нажатии на картинку
+
 
 //вставляем карточку
 const addElement = (name,link) =>{ 
@@ -88,7 +93,21 @@ const addElement = (name,link) =>{
   if (emptyCards) { //тут проверяем если emptyCards присутствует,то удаляем его при добавлении карточки
     emptyCards.remove();
   }  
-  popupClose(); //тут закрываем форму без отправки на сервер
+  //открытие картинки по нажатию
+  const imageFromGallery = document.querySelectorAll('.element__image');
+  const popupContent = document.querySelector('.popup__content');
+  for (i = 0; i < imageFromGallery.length; i++) {
+    imageFromGallery[i].addEventListener('click', (event) => {
+      console.log(event.target); 
+      popupEditForm.removeEventListener('submit',getValueOfInput,false); //удаляем слушатель из popupOpenOnEditButton
+      popupEditForm.removeEventListener('submit', addElementAndPreventDefault, false);
+      saveButton.remove();
+      popupEditForm.remove();
+      popupImage.src = event.target.src;
+      popup.classList.add('popup_active'); 
+    });
+  }
+  popupClose();
 }
 
 for (let i = 0; i < initialCards.length; i++){ //тут карточки из готового массива выше
@@ -97,7 +116,8 @@ for (let i = 0; i < initialCards.length; i++){ //тут карточки из г
 
 //что происходит при нажатии на кнопку Edit
 const popupOpenOnEditButton = () => {
-  popupEditForm.removeEventListener('submit', addElementAndPreventDefault, false);
+  document.removeEventListener('submit', addElementAndPreventDefault, false);
+  //document.removeEventListener('click',bigImage);
   popupTitle.textContent = "Редактировать профиль";
   saveButton.textContent = "Сохранить";
   inputName.placeholder = "Введите ваше имя";
@@ -126,28 +146,13 @@ const popupOpenOnAddButton = () => {
   popupEditForm.addEventListener('submit', addElementAndPreventDefault, false);
 }
 
-//что происходит при нажатии на картинку
 
-const imageFromGallery = document.querySelectorAll('.element__image'); //увеличиваем картинки
-console.log(imageFromGallery.length);
-for (i = 0; i < imageFromGallery.length; i++){
-  imageFromGallery[i].addEventListener('click',() => {
-    popupEditForm.removeEventListener('submit',getValueOfInput,false); //удаляем слушатель из popupOpenOnEditButton
-    popupEditForm.removeEventListener('submit', addElementAndPreventDefault, false);
-    saveButton.remove();
-    popupEditForm.remove();
-    const bigImage = document.createElement('img');
-    bigImage[i].src = imageFromGallery[i].src;
-    popupContent[i].append(bigImage[i]);
-    popup.classList.add('popup_active');
-    console.log(imageFromGallery[i].src);
-  });
-}
 
 //слушатели кнопок
 editButton.addEventListener('click',popupOpenOnEditButton); //открываем окошко popup по клику на edit
 addButton.addEventListener('click',popupOpenOnAddButton); //открываем окошко popup по клику на add
 cancelButton.addEventListener('click',popupClose); //закрываем окошко popup по клику на крестик
+
 
 
 

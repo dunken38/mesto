@@ -1,0 +1,11 @@
+.popup__image-text {
+    margin: 0;
+    text-align: left;
+    font-family: 'Inter', 'Corbel', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 120%;
+    font-size: 12px;
+    cursor: default;
+    background-color: transparent;
+  }
