@@ -1,5 +1,6 @@
 .popup__image-text {
-    margin: 0;
+    margin-top: 10px;
+    color: white;
     text-align: left;
     font-family: 'Inter', 'Corbel', sans-serif;
     font-style: normal;

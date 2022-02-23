@@ -20,10 +20,9 @@
       </div>
       <button type="button" class="profile__add-button" title="Добавить"></button>
     </section>
-    
     <section class="gallery">
       <ul class="elements">
-        <h2 class="element__empty-cards">Добавьте карточку</h2>
+        <li class="element__empty-cards">Добавьте карточку</li>
       </ul>
     </section>
   </main>
@@ -36,8 +35,6 @@
     <div class="popup">
       <div class="popup__content">
         <button type="button" class="popup__cancel-button" title="Отмена"></button>
-        <img src="" class="popup__image" alt="">
-        <p class="popup__image-text"></p>
         <form name="popup-edit-form"> 
           <h2 class="popup__title"></h2>
           <input type="text" name="input-name" placeholder="" required value="" class="popup__input">
@@ -47,11 +44,21 @@
       </div>
     </div>
   </template>
+  <!--Тут хранится увеличенная картинка,делал через popupTemplate,убил 3 дня,в результате корректный функционал получил только через imageTemplate-->
+  <template id="imageTemplate">
+    <div class="popup">
+      <div class="popup__image-content">
+        <button type="button" class="popup__cancel-button" title="Отмена"></button>
+        <img src="" class="popup__image" alt="">
+        <h2 class="popup__image-text"></h2>
+      </div>
+    </div>
+  </template>
   <!--тут хранятся карточки-->
   <template id="gallery">
     <li class="element">
-      <img src="" class="element__image" alt="">
       <button type="button" class="element__trash"></button>
+      <img src="" class="element__image" alt="">
       <div class="element__description">
         <h2 class="element__text"></h2>
         <button type="button" class="element__like"></button>
