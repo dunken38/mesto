@@ -1,4 +1,4 @@
-.element__empty {
+.elements__empty {
   color: grey;
   opacity: 0.2;
   margin: 0 auto;
@@ -10,13 +10,13 @@
 }
 
 @media screen and (max-width: 894px) {
-  .element__empty {
+  .elements__empty {
     font-size: 20px;
   }
 }
 
 @media screen and (max-width: 596px) {
-  .element__empty {
+  .elements__empty {
     font-size: 16px;
   }
 }
