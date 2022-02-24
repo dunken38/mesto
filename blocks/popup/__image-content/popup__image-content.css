@@ -5,4 +5,5 @@
   box-shadow: 0 0 25px rgba(0,0,0,0.15);
   text-align: center;
   position: relative; /*относительная позиция чтобы крестик был всегда привязан к белому окошку*/
+  background-color: 'transparent';
 }

@@ -22,7 +22,6 @@
     </section>
     <section class="gallery">
       <ul class="elements">
-        <li class="elements__empty">Добавьте карточку</li>
       </ul>
     </section>
   </main>
@@ -30,30 +29,38 @@
     <p class="footer__copyright">© 2022 Mesto Russia</p>
   </footer>
 
-  <!--тут хранится окошко popup для правки данных профиля и добавления карточек-->
-  <template id="popupTemplate">
-    <div class="popup">
-      <div class="popup__content">
-        <button type="button" class="popup__cancel-button" title="Отмена"></button>
-        <form name="popup-edit-form"> 
-          <h2 class="popup__title"></h2>
-          <input type="text" name="input-name" placeholder="" required value="" class="popup__input">
-          <input type="text" name="input-about" placeholder="" required value="" class="popup__input">
-          <button type="submit" class="popup__save-button"></button>
-        </form>
-      </div>
+  <!--тут хранится окошко popup для правки данных профиля-->
+  <div class="popup" id="popupEdit">
+    <div class="popup__content">
+      <button type="button" class="popup__cancel-button" id="cancelButtonEdit" title="Отмена"></button>
+      <form name="popup-edit-form"> 
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input type="text" name="input-name-edit" placeholder="Введите ваше имя" required value="" class="popup__input">
+        <input type="text" name="input-about-edit" placeholder="Напишите Ваши увлечения" required value="" class="popup__input">
+        <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
     </div>
-  </template>
-  <!--Тут хранится увеличенная картинка,делал через popupTemplate,убил 3 дня,в результате корректный функционал получил только через imageTemplate-->
-  <template id="imageTemplate">
-    <div class="popup">
-      <div class="popup__image-content">
-        <button type="button" class="popup__cancel-button" title="Отмена"></button>
-        <img src="none" class="popup__image" alt="Увеличенное изображение">
-        <h2 class="popup__image-text"></h2>
-      </div>
+  </div>
+  <!--тут хранится окошко popup для добавления карточек-->
+  <div class="popup" id="popupAdd">
+    <div class="popup__content">
+      <button type="button" class="popup__cancel-button" id="cancelButtonAdd" title="Отмена"></button>
+      <form name="popup-add-form"> 
+        <h2 class="popup__title">Новое место</h2>
+        <input type="text" name="input-name-add" placeholder="Название" required value="" class="popup__input">
+        <input type="text" name="input-about-add" placeholder="Ссылка на картинку" required value="" class="popup__input">
+        <button type="submit" class="popup__save-button">Создать</button>
+      </form>
     </div>
-  </template>
+  </div>
+  <!--Тут хранится увеличенная картинка-->
+  <div class="popup" id="popupZoomImage">
+    <div class="popup__image-content">
+      <button type="button" class="popup__cancel-button" id="cancelButtonZoomImage" title="Отмена"></button>
+      <img src="empty" class="popup__image" alt="Увеличенное изображение">
+      <h2 class="popup__image-text"></h2>
+    </div>
+  </div>
   <!--тут хранятся карточки-->
   <template id="gallery">
     <li class="element">
@@ -66,9 +73,7 @@
     </li>
   </template>
 
-  <!--сюда втыкаем содержимое template для окошка popup c исправленными данными-->
-  <div class="popup-window"></div> 
-
+  <script src="./scripts/cards.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 </html>
