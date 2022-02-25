@@ -49,7 +49,6 @@ const createCard = (name,link) => {
   galleryTrashButton.addEventListener('click',function(){ 
     galleryElement.remove(); 
   });
-  //const zoomGalleryFunc = zoomGalleryImage.bind(name,link);
   //открытие картинки по нажатию   
   galleryImage.addEventListener('click',zoomGalleryImage.bind(null,name,link));
   return galleryElement;
