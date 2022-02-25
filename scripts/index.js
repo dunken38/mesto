@@ -49,18 +49,17 @@ const createCard = (name,link) => {
   galleryTrashButton.addEventListener('click',function(){ 
     galleryElement.remove(); 
   });
+  //const zoomGalleryFunc = zoomGalleryImage.bind(name,link);
   //открытие картинки по нажатию   
-  galleryImage.addEventListener('click',() => {
-    popupImage.src = link;
-    popupImage.alt = name;
-    popupImageText.textContent = name;
-    openPopup(popupZoomImage);
-    cancelButtonZoomImage.addEventListener('click',() => {
-      popupZoomImage.classList.remove('popup_active');
-    });
-  });
-  console.log(galleryElement);
+  galleryImage.addEventListener('click',zoomGalleryImage.bind(null,name,link));
   return galleryElement;
+}
+
+const zoomGalleryImage = (name,link) => {
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupImageText.textContent = name;
+  openPopup(popupZoomImage);
 }
 
 const pasteCard = (name,link) => {
@@ -70,7 +69,6 @@ const pasteCard = (name,link) => {
 //тут 6 карточек из готового массива выше
 for (let i = 0; i < initialCards.length; i++){ 
   pasteCard(initialCards[i].name,initialCards[i].link);
-  console.log(galleryElements.children.length);
 }
 
 //кнопка save с заменой полей из popup в profile
@@ -86,9 +84,6 @@ const openPopupOnEditButton = () => {
   inputNameEdit.value = profileInfoName.textContent; //получаем данные в форму из информации со страницы
   inputAboutEdit.value = profileInfoAbout.textContent;
   openPopup(popupEdit);
-  cancelButtonEdit.addEventListener('click',() => {
-    popupEdit.classList.remove('popup_active');
-  });
 }
 
 //тут вынесли функцию со слушателя submit в окошке add чтобы корректно пользоваться добавлением и отменой слушателя
@@ -103,9 +98,6 @@ const openPopupOnAddButton = () => {
   inputNameAdd.value = '';
   inputAboutAdd.value = '';
   openPopup(popupAdd);
-  cancelButtonAdd.addEventListener('click',() => {
-    popupAdd.classList.remove('popup_active');
-  });
 }
 
 //слушатели кнопок
@@ -113,3 +105,6 @@ editButton.addEventListener('click',openPopupOnEditButton); //открываем
 addButton.addEventListener('click',openPopupOnAddButton); //открываем окошко popup по клику на add
 popupEditForm.addEventListener('submit',getValueOfInputFormsEdit,false); //закрываем окошко popup по клику на Сохранить.False добавлен для того чтобы форма не обновлялась.
 popupAddForm.addEventListener('submit',createCardFormSubmit,false);
+cancelButtonZoomImage.addEventListener('click',closePopup.bind(null,popupZoomImage));
+cancelButtonEdit.addEventListener('click',closePopup.bind(null,popupEdit));
+cancelButtonAdd.addEventListener('click',closePopup.bind(null,popupAdd));
