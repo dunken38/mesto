@@ -16,20 +16,36 @@ const inputNameAdd = document.querySelector('[name=input-name-add]');
 const inputAboutAdd = document.querySelector('[name=input-about-add]');
 const galleryElements = document.querySelector('.elements');
 const emptyCards = document.querySelector('.elements__empty'); //чтобы убирать надпись "Добавьте карточку"
-const popupWindow = document.querySelector('.popup-window');
 const popupZoomImage = document.querySelector('#popupZoomImage');
 const imagePopupContent = document.querySelector('.popup__image-content');
 const popupImage = document.querySelector('.popup__image');
 const popupImageText = document.querySelector('.popup__image-text');
+const popupContent = document.querySelector('.popup__content');
 
 //теперь пишем функции
 //открываем окошки
-function openPopup(popup){
+function openPopup(popup) {
   popup.classList.add('popup_active');
+  
+  function closePopupViaEsc(evt) {
+    if (evt.key === 'Escape') {
+      closePopup(popup);
+    }
+  }
+  document.addEventListener('keydown',closePopupViaEsc);
+  closePopupByEmptyClick(popup)
 }
 //закрываем окошки
-function closePopup(popup){
+function closePopup(popup) {
   popup.classList.remove('popup_active');
+}
+function closePopupByEmptyClick(popup) {
+  function clickedElementToClose(evt) {
+    if (!evt.target.classList.contains('popupContent')) {
+      closePopup(popup);
+    }
+  }
+    document.addEventListener('click',clickedElementToClose);
 }
 
 //вставляем карточку
@@ -99,7 +115,17 @@ const openPopupOnAddButton = () => {
   openPopup(popupAdd);
 }
 
-//слушатели кнопок
+//блок валидации
+/*enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+});*/
+
+//слушатели
 editButton.addEventListener('click',openPopupOnEditButton); //открываем окошко popup по клику на edit
 addButton.addEventListener('click',openPopupOnAddButton); //открываем окошко popup по клику на add
 popupEditForm.addEventListener('submit',getValueOfInputFormsEdit,false); //закрываем окошко popup по клику на Сохранить.False добавлен для того чтобы форма не обновлялась.
@@ -107,3 +133,6 @@ popupAddForm.addEventListener('submit',createCardFormSubmit,false);
 cancelButtonZoomImage.addEventListener('click',closePopup.bind(null,popupZoomImage));
 cancelButtonEdit.addEventListener('click',closePopup.bind(null,popupEdit));
 cancelButtonAdd.addEventListener('click',closePopup.bind(null,popupAdd));
+/*popupZoomImage.addEventListener('click',closePopup.bind(null,popupZoomImage));
+popupEdit.addEventListener('click',closePopup.bind(null,popupEdit));
+popupAdd.addEventListener('click',closePopup.bind(null,popupAdd));*/

@@ -15,9 +15,9 @@
 }
 
 .popup__save-button:hover  {
-  cursor: pointer;
   opacity: 0.8;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 894px) {

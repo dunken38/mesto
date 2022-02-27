@@ -45,11 +45,11 @@
   <div class="popup" id="popupAdd">
     <div class="popup__content">
       <button type="button" class="popup__cancel-button" id="cancelButtonAdd" title="Отмена"></button>
-      <form name="popup-add-form"> 
+      <form name="popup-add-form">
         <h2 class="popup__title">Новое место</h2>
         <input type="text" name="input-name-add" placeholder="Название" required value="" class="popup__input">
-        <input type="text" name="input-about-add" placeholder="Ссылка на картинку" required value="" class="popup__input">
-        <button type="submit" class="popup__save-button">Создать</button>
+        <input type="url" name="input-about-add" placeholder="Ссылка на картинку" required value="" class="popup__input">
+        <button type="submit" class="popup__save-button popup__save-button_inactive" disabled>Создать</button>
       </form>
     </div>
   </div>
