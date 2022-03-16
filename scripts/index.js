@@ -3,9 +3,6 @@ const profileInfoName = document.querySelector('.profile__info-name');
 const profileInfoAbout = document.querySelector('.profile__info-about');
 const editButton = document.querySelector('.profile__info-edit-button');
 const addButton = document.querySelector('.profile__add-button');
-const cancelButtonEdit = document.querySelector('#cancelButtonEdit'); //сделал поиск переменных в некоторых случаях по id и name чтобы оставить одинаковые классы в разных местах
-const cancelButtonAdd = document.querySelector('#cancelButtonAdd');
-const cancelButtonZoomImage = document.querySelector('#cancelButtonZoomImage');
 const popupEdit = document.querySelector('#popupEdit');
 const popupAdd = document.querySelector('#popupAdd');
 const popupEditForm = document.querySelector('[name=popup-edit-form]');
@@ -23,29 +20,21 @@ const popupImageText = document.querySelector('.popup__image-text');
 const popupContent = document.querySelector('.popup__content');
 
 //теперь пишем функции
-//открываем окошки
+//открываем окошки+сразу пишем условия для закрытия всеми способами
 function openPopup(popup) {
   popup.classList.add('popup_active');
-  
   function closePopupViaEsc(evt) {
-    if (evt.key === 'Escape') {
+    if ((evt.key === 'Escape')||(evt.target.classList.contains('popup'))||(evt.target.classList.contains('popup__cancel-button'))) {
       closePopup(popup);
     }
   }
   document.addEventListener('keydown',closePopupViaEsc);
-  closePopupByEmptyClick(popup)
+  document.addEventListener('click',closePopupViaEsc);
 }
+
 //закрываем окошки
 function closePopup(popup) {
   popup.classList.remove('popup_active');
-}
-function closePopupByEmptyClick(popup) {
-  function clickedElementToClose(evt) {
-    if (!evt.target.classList.contains('popupContent')) {
-      closePopup(popup);
-    }
-  }
-    document.addEventListener('click',clickedElementToClose);
 }
 
 //вставляем карточку
@@ -81,7 +70,7 @@ const pasteCard = (name,link) => {
   galleryElements.prepend(createCard(name,link));
 }
 
-//тут 6 карточек из готового массива выше
+//тут 6 карточек из готового массива в cards.js
 for (let i = 0; i < initialCards.length; i++){ 
   pasteCard(initialCards[i].name,initialCards[i].link);
 }
@@ -115,24 +104,8 @@ const openPopupOnAddButton = () => {
   openPopup(popupAdd);
 }
 
-//блок валидации
-/*enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-});*/
-
 //слушатели
 editButton.addEventListener('click',openPopupOnEditButton); //открываем окошко popup по клику на edit
 addButton.addEventListener('click',openPopupOnAddButton); //открываем окошко popup по клику на add
 popupEditForm.addEventListener('submit',getValueOfInputFormsEdit,false); //закрываем окошко popup по клику на Сохранить.False добавлен для того чтобы форма не обновлялась.
 popupAddForm.addEventListener('submit',createCardFormSubmit,false);
-cancelButtonZoomImage.addEventListener('click',closePopup.bind(null,popupZoomImage));
-cancelButtonEdit.addEventListener('click',closePopup.bind(null,popupEdit));
-cancelButtonAdd.addEventListener('click',closePopup.bind(null,popupAdd));
-/*popupZoomImage.addEventListener('click',closePopup.bind(null,popupZoomImage));
-popupEdit.addEventListener('click',closePopup.bind(null,popupEdit));
-popupAdd.addEventListener('click',closePopup.bind(null,popupAdd));*/
