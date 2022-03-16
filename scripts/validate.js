@@ -7,40 +7,30 @@
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 });*/
-const formElement = document.querySelector('.popup__form');
-const formInput = formElement.querySelector('.popup__input');
-console.log(formInput);
+
+//const formError = formElement.querySelector(`.${formInput.id}-error`);
+
 
 // Функция, которая добавляет класс с ошибкой
-const showInputError = (element) => {
-  element.classList.add('popup__input_type_error');
+const showInputError = (formElement, inputElement, errorMessage) => {
+  // Находим элемент ошибки внутри самой функции
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // Остальной код такой же
+  inputElement.classList.add('popup__input_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__input-error_active');
 };
 
-// Функция, которая удаляет класс с ошибкой
-const hideInputError = (element) => {
-  element.classList.remove('popup__input_type_error');
-};
+const hideInputError = (formElement, inputElement) => {
+  // Находим элемент ошибки
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // Остальной код такой же
+  inputElement.classList.remove('popup__input_type_error');
+  errorElement.classList.remove('popup__input-error_active');
+  errorElement.textContent = '';
+}; 
 
-// Функция, которая проверяет валидность поля
-const isValid = () => {
-  if (!formInput.validity.valid) {
-    // Если поле не проходит валидацию, покажем ошибку
-    showInputError(formInput);
-  } else {
-    // Если проходит, скроем
-    hideInputError(formInput);
-  }
-};
- 
-formElement.addEventListener('submit', function (evt) {
-  // Отменим стандартное поведение по сабмиту
-  evt.preventDefault();
-});
-
-formInput.addEventListener('input', isValid);
-
-
-/*//проверяем валидацию
+//проверяем валидацию
 const isValid = (formElement, inputElement) => {
   if (!inputElement.validity.valid) {
     // showInputError теперь получает параметром форму, в которой
@@ -51,7 +41,7 @@ const isValid = (formElement, inputElement) => {
     // находится проверяемое поле, и само это поле
     hideInputError(formElement, inputElement);
   }
-}; 
+};
 
 const hasInvalidInput = (inputList) => {
   // проходим по этому массиву методом some
@@ -64,22 +54,43 @@ const hasInvalidInput = (inputList) => {
   })
 }; 
 
+const enableValidation = () => {
+  // Найдём все формы с указанным классом в DOM,
+  // сделаем из них массив методом Array.from
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+
+  // Переберём полученную коллекцию
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      // У каждой формы отменим стандартное поведение
+      evt.preventDefault();
+    });
+
+    // Для каждой формы вызовем функцию setEventListeners,
+    // передав ей элемент формы
+    setEventListeners(formElement);
+  });
+};
+
+// Вызовем функцию
+enableValidation(); 
+
 const toggleButtonState = (inputList, buttonElement) => {
   // Если есть хотя бы один невалидный инпут
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
-    buttonElement.classList.add('form__submit_inactive');
+    buttonElement.classList.add('popup__save-button_inactive');
   } else {
     // иначе сделай кнопку активной
-    buttonElement.classList.remove('form__submit_inactive');
+    buttonElement.classList.remove('popup__save-button_inactive');
   }
 }; 
 
 const setEventListeners = (formElement) => {
   // Найдём все поля формы и сделаем из них массив
-  const inputList = Array.from(formElement.querySelectorAll(`.form__input`));
+  const inputList = Array.from(formElement.querySelectorAll(`.popup__input`));
   // Найдём в текущей форме кнопку отправки
-  const buttonElement = formElement.querySelector('.form__submit');
+  const buttonElement = formElement.querySelector('.popup__save-button');
   toggleButtonState(inputList, buttonElement);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
@@ -89,4 +100,4 @@ const setEventListeners = (formElement) => {
       toggleButtonState(inputList, buttonElement);
     });
   });
-}; */
+}; 

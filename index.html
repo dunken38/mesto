@@ -35,8 +35,14 @@
       <button type="button" class="popup__cancel-button" id="cancelButtonEdit" title="Отмена"></button>
       <form name="popup-edit-form" class="popup__form" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input type="url" name="input-name-edit" placeholder="Введите ваше имя" required value="" class="popup__input">
-        <input type="text" name="input-about-edit" placeholder="Напишите Ваши увлечения" required value="" class="popup__input">
+        <label>
+          <input type="url" name="input-name-edit" id="name-edit" placeholder="Введите ваше имя" required value="" class="popup__input" minlength="2" maxlength="40">
+          <span class="name-edit-error popup__input-error"></span>
+        </label>
+        <label>
+          <input type="text" name="input-about-edit" id="about-edit" placeholder="Напишите Ваши увлечения" required value="" class="popup__input" minlength="2" maxlength="200">
+          <span class="about-edit-error popup__input-error"></span>
+        </label>
         <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
     </div>
@@ -47,8 +53,14 @@
       <button type="button" class="popup__cancel-button" id="cancelButtonAdd" title="Отмена"></button>
       <form name="popup-add-form" class="popup__form" novalidate>
         <h2 class="popup__title">Новое место</h2>
-        <input type="text" name="input-name-add" placeholder="Название" required value="" class="popup__input">
-        <input type="url" name="input-about-add" placeholder="Ссылка на картинку" required value="" class="popup__input">
+        <label>
+          <input type="text" name="input-name-add" id="name-add" placeholder="Название" required value="" class="popup__input" minlength="2" maxlength="30">
+          <span class="name-add-error popup__input-error"></span>
+        </label>
+        <label>
+          <input type="url" name="input-about-add" id="about-add" placeholder="Ссылка на картинку" required value="" class="popup__input">
+          <span class="about-add-error popup__input-error"></span>
+        </label>
         <button type="submit" class="popup__save-button">Создать</button>
       </form>
     </div>
