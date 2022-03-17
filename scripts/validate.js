@@ -36,7 +36,6 @@ const hasInvalidInput = (inputList) => {
     // Если поле не валидно, колбэк вернёт true
     // Обход массива прекратится и вся фунцкция
     // hasInvalidInput вернёт true
-
     return !inputElement.validity.valid;
   })
 }; 
@@ -52,7 +51,6 @@ const enableValidation = () => {
       // У каждой формы отменим стандартное поведение
       evt.preventDefault();
     });
-
     // Для каждой формы вызовем функцию setEventListeners,
     // передав ей элемент формы
     setEventListeners(formElement);
@@ -64,9 +62,11 @@ const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
     buttonElement.classList.add('popup__save-button_inactive');
+    buttonElement.disabled=true;
   } else {
     // иначе сделай кнопку активной
     buttonElement.classList.remove('popup__save-button_inactive');
+    buttonElement.disabled=false;
   }
 }; 
 
