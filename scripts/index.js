@@ -18,23 +18,30 @@ const imagePopupContent = document.querySelector('.popup__image-content');
 const popupImage = document.querySelector('.popup__image');
 const popupImageText = document.querySelector('.popup__image-text');
 const popupContent = document.querySelector('.popup__content');
+const popupElements = document.querySelectorAll('.popup');
 
 //теперь пишем функции
 //открываем окошки+сразу пишем условия для закрытия всеми способами
 function openPopup(popup) {
   popup.classList.add('popup_active');
-  function closePopupViaEsc(evt) {
-    if ((evt.key === 'Escape')||(evt.target.classList.contains('popup'))||(evt.target.classList.contains('popup__cancel-button'))) {
-      closePopup(popup);
-    }
-  }
-  document.addEventListener('keydown',closePopupViaEsc);
-  document.addEventListener('click',closePopupViaEsc);
+  document.addEventListener('keydown',closePopupVia);
+  document.addEventListener('click',closePopupVia);
 }
 
 //закрываем окошки
 function closePopup(popup) {
   popup.classList.remove('popup_active');
+}
+
+//делаем функцию с несколькими способами закрытия попапа
+function closePopupVia(evt) {  
+  if ((evt.key === 'Escape')||(evt.target.classList.contains('popup'))||(evt.target.classList.contains('popup__cancel-button'))) {
+    popupElements.forEach((popupElement) => {
+      popupElement.classList.remove('popup_active');
+      document.removeEventListener('keydown',closePopupVia);
+      document.removeEventListener('click',closePopupVia);
+    });
+  }
 }
 
 //вставляем карточку
@@ -48,15 +55,20 @@ const createCard = (name,link) => {
   galleryText.textContent = name;
   galleryImage.src = link;
   galleryImage.alt = name;
-  buttonLike.addEventListener('click', function(event){ //лайки со слушателем
-    event.target.classList.toggle('element__like_active');
-  });
-  galleryTrashButton.addEventListener('click',function(){ 
-    galleryElement.remove(); 
-  });
-  //открытие картинки по нажатию   
-  galleryImage.addEventListener('click',zoomGalleryImage.bind(null,name,link));
+  buttonLike.addEventListener('click', activateLike); //лайки со слушателем
+  galleryTrashButton.addEventListener('click', () => activateTrash(galleryElement)); 
+  galleryImage.addEventListener('click', () => zoomGalleryImage(name,link)); //открытие картинки по нажатию
   return galleryElement;
+}
+
+//лайки
+const activateLike = (event) => {
+  event.target.classList.toggle('element__like_active');
+}
+
+//удаление элемента
+const activateTrash = (galleryElement) => {
+  galleryElement.remove();
 }
 
 const zoomGalleryImage = (name,link) => {
