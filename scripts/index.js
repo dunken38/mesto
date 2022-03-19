@@ -31,15 +31,17 @@ function openPopup(popup) {
 //закрываем окошки
 function closePopup(popup) {
   popup.classList.remove('popup_active');
+  document.removeEventListener('keydown',closePopupVia);
+  document.removeEventListener('click',closePopupVia);
 }
 
 //делаем функцию с несколькими способами закрытия попапа
 function closePopupVia(evt) {  
   if ((evt.key === 'Escape')||(evt.target.classList.contains('popup'))||(evt.target.classList.contains('popup__cancel-button'))) {
     popupElements.forEach((popupElement) => {
-      popupElement.classList.remove('popup_active');
-      document.removeEventListener('keydown',closePopupVia);
-      document.removeEventListener('click',closePopupVia);
+      if (popupElement.classList.contains('popup_active')) {
+        closePopup(popupElement);
+      }
     });
   }
 }
