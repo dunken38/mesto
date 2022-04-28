@@ -1,3 +1,7 @@
+import {Card, UserCard} from './Card.js';
+import {initialCards} from './Cards.js';
+import {FormValidator} from './FormValidator.js';
+
 //объявляем переменные
 const profileInfoName = document.querySelector('.profile__info-name');
 const profileInfoAbout = document.querySelector('.profile__info-about');
@@ -9,8 +13,15 @@ const popupEditForm = document.querySelector('[name=popup-edit-form]');
 const popupAddForm = document.querySelector('[name=popup-add-form]');
 const inputNameEdit = document.querySelector('[name=input-name-edit]'); 
 const inputAboutEdit = document.querySelector('[name=input-about-edit]');
-const inputNameAdd = document.querySelector('[name=input-name-add]'); 
-const inputAboutAdd = document.querySelector('[name=input-about-add]');
+
+const addInputWindow = {
+  name: document.querySelector('[name=input-name-add]'),
+  link: document.querySelector('[name=input-about-add]')
+}
+
+/*const inputNameAdd = document.querySelector('[name=input-name-add]'); 
+const inputAboutAdd = document.querySelector('[name=input-about-add]');*/
+
 const galleryElements = document.querySelector('.elements');
 const emptyCards = document.querySelector('.elements__empty'); //чтобы убирать надпись "Добавьте карточку"
 const popupZoomImage = document.querySelector('#popupZoomImage');
@@ -47,7 +58,7 @@ function closePopupVia(evt) {
 }
 
 //вставляем карточку
-const createCard = (name,link) => { 
+/*const createCard = (name,link) => { 
   const galleryTemplate = document.querySelector('#gallery').content; //забираем template для карточек
   const galleryElement = galleryTemplate.querySelector('.element').cloneNode(true);
   const galleryImage = galleryElement.querySelector('.element__image');
@@ -61,33 +72,23 @@ const createCard = (name,link) => {
   galleryTrashButton.addEventListener('click', () => activateTrash(galleryElement)); 
   galleryImage.addEventListener('click', () => zoomGalleryImage(name,link)); //открытие картинки по нажатию
   return galleryElement;
-}
+}*/
 
-//лайки
-const activateLike = (event) => {
-  event.target.classList.toggle('element__like_active');
-}
 
-//удаление элемента
-const activateTrash = (galleryElement) => {
-  galleryElement.remove();
-}
-
-const zoomGalleryImage = (name,link) => {
+/*const zoomGalleryImage = (name,link) => {
   popupImage.src = link;
   popupImage.alt = name;
   popupImageText.textContent = name;
   openPopup(popupZoomImage);
-}
+}*/
 
-const pasteCard = (name,link) => {
-  galleryElements.prepend(createCard(name,link));
-}
 
-//тут 6 карточек из готового массива в cards.js
-for (let i = 0; i < initialCards.length; i++){ 
-  pasteCard(initialCards[i].name,initialCards[i].link);
-}
+//сделали прогон карточек из Cards.js и создали их
+initialCards.forEach((item) => {
+  const card = new Card(item, '#gallery');
+  const cardElement = card.generateCard();
+  galleryElements.prepend(cardElement);
+})
 
 //кнопка save с заменой полей из popup в profile
 const getValueOfInputFormsEdit = (evt) => { 
@@ -107,14 +108,22 @@ const openPopupOnEditButton = () => {
 //тут вынесли функцию со слушателя submit в окошке add чтобы корректно пользоваться добавлением и отменой слушателя
 const createCardFormSubmit = (evt) => { 
   evt.preventDefault();
-  pasteCard(inputNameAdd.value,inputAboutAdd.value);
+  //pasteCard(addInputWindow.name.value, addInputWindow.link.value);
+
+  const card = new UserCard(addInputWindow, '#gallery');
+  const cardElement = card.generateCard();
+  galleryElements.prepend(cardElement);
+//  console.log(addInputWindow);
+  
   closePopup(popupAdd);
 }
 
+closePopup(cardElement);
+
 //что происходит при нажатии на кнопку Add
 const openPopupOnAddButton = () => {
-  inputNameAdd.value = '';
-  inputAboutAdd.value = '';
+  addInputWindow.name.value = '';
+  addInputWindow.link.value = '';
   openPopup(popupAdd);
 }
 

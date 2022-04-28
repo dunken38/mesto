@@ -7,6 +7,10 @@ const validationObject = {
   errorClass: 'popup__input-error_active'
 };
 
+export class FormValidator {
+
+}
+
 // Функция, которая добавляет класс с ошибкой
 const showInputError = (formElement, inputElement, errorMessage) => {
   // Находим элемент ошибки внутри самой функции
