@@ -1,3 +1,4 @@
+//создаем общий класс для создания карточек
 export class Card {
   constructor(data, cardSelector) {
     this._name = data.name;
@@ -11,7 +12,7 @@ export class Card {
     this._galleryImage = this._element.querySelector('.element__image');
     this._popupZoomImage = document.querySelector('#popupZoomImage');
   }
-
+  //достаем шаблон карточки
   _getTemplate() {
     const galleryElement = document
     .querySelector(this._cardSelector)
@@ -20,7 +21,7 @@ export class Card {
     .cloneNode(true);
     return galleryElement;
   }
-
+  //создаем карточку посредством присвоения полям шаблона новых значений
   generateCard() {
     this._setEventListeners();
     this._element.querySelector('.element__text').textContent = this._name;
@@ -28,23 +29,22 @@ export class Card {
     this._element.querySelector('.element__image').alt = this._name;
     return this._element;
   }
-
+  //удаление карточки,используется в слушателе корзины
   _removeCard() {
     this._element.remove();
   }
-
+  //лайк
   _activateLike() {
     this._buttonLike.classList.toggle('element__like_active');
   }
-
+  //зум запихнул сюда же
   _zoomGalleryImage() {
     this._popupImage.src = this._link;
     this._popupImage.alt = this._name;
     this._popupImageText.textContent = this._name;
     this._popupZoomImage.classList.add('popup_active');
   }
-
-  
+  //слушатели
   _setEventListeners() {
     this._buttonLike.addEventListener('click', () => {
       this._activateLike();
@@ -68,10 +68,3 @@ export class UserCard extends Card {
     this._link = data.link.value;
   }
 }
-
-/*const zoomGalleryImage = (name,link) => {
-  popupImage.src = link;
-  popupImage.alt = name;
-  popupImageText.textContent = name;
-  openPopup(popupZoomImage);
-}*/
