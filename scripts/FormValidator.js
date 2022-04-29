@@ -8,7 +8,9 @@ const validationObject = {
 };
 
 export class FormValidator {
-
+  constructor (validationObject,formElement) {
+    
+  }
 }
 
 // Функция, которая добавляет класс с ошибкой

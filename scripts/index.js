@@ -13,7 +13,7 @@ const popupEditForm = document.querySelector('[name=popup-edit-form]');
 const popupAddForm = document.querySelector('[name=popup-add-form]');
 const inputNameEdit = document.querySelector('[name=input-name-edit]'); 
 const inputAboutEdit = document.querySelector('[name=input-about-edit]');
-const addInputWindow = { //тут объект инпутов popup'а add для универсализации с объектом заготовленных карточек
+const addInputWindow = { //тут объект инпутов popup'а add для универсализации с объектом заготовленных карточек в Cards.js
   name: document.querySelector('[name=input-name-add]'),
   link: document.querySelector('[name=input-about-add]')
 }
