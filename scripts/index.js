@@ -19,6 +19,14 @@ const addInputWindow = { //тут объект инпутов popup'а add дл�
 }
 const galleryElements = document.querySelector('.elements');
 const popupElements = document.querySelectorAll('.popup');
+const validationObject = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_inactive',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+};
 
 //теперь пишем функции
 //открываем окошки
@@ -71,6 +79,8 @@ const openPopupOnEditButton = () => {
   inputNameEdit.value = profileInfoName.textContent; //получаем данные в форму из информации со страницы
   inputAboutEdit.value = profileInfoAbout.textContent;
   openPopup(popupEdit);
+  const validateEditWindow = new FormValidator (validationObject,'#popupEdit');
+  validateEditWindow.enableValidation();
 }
 
 //что происходит при нажатии на кнопку Add
@@ -78,6 +88,8 @@ const openPopupOnAddButton = () => {
   addInputWindow.name.value = '';
   addInputWindow.link.value = '';
   openPopup(popupAdd);
+  const validateAddWindow = new FormValidator (validationObject,'#popupAdd');
+  validateAddWindow.enableValidation();
 }
 
 //слушатели
