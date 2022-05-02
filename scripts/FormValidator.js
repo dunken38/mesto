@@ -46,7 +46,7 @@ export class FormValidator {
     // Если есть хотя бы один невалидный инпут
     if (this._hasInvalidInput()) {
       // сделай кнопку неактивной
-      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this.disabledAddButton(); //вынес выключение кнопки в эту ф-цию чтобы не дублировать код
     } else {
       // иначе сделай кнопку активной
       this._buttonElement.classList.remove(this._inactiveButtonClass);
@@ -55,6 +55,7 @@ export class FormValidator {
   };
 
   disabledAddButton() { //возвращаем кнопку в disabled сразу после сабмита в окошке Add
+    this._buttonElement.classList.add(this._inactiveButtonClass);
     this._buttonElement.disabled=true;
   }
 

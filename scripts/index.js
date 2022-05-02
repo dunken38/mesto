@@ -58,12 +58,17 @@ function closePopupVia(evt) {
 const createCard = (card) => {
   const userCard = new Card(card, '#gallery');
   const cardElement = userCard.generateCard();
-  galleryElements.prepend(cardElement);
+  return cardElement; //вернул CardElement чтобы можно было вынести отдельно ф-цию добавления карточек и затем использовать в ней текущую ф-цию
+}
+
+//тут функция добавления карточек отдельно от создания экземпляра класса
+const pasteCard = (pastedCardElement) => {
+  galleryElements.prepend(pastedCardElement);
 }
 
 //сделали прогон карточек из Cards.js и создали их при помощи класса Card
 initialCards.forEach((item) => {
-  createCard(item);
+  pasteCard(createCard(item)); //тут воткнул ф-цию добавления карточек
 })
 
 //создаем пользовательскую карточку
@@ -74,7 +79,7 @@ const createCardFormSubmit = (evt) => {
     name: inputNameAdd.value,
     link: inputAboutAdd.value
   };
-  createCard(addInputWindow);
+  pasteCard(createCard(addInputWindow)); //тут воткнул ф-цию добавления карточек
   closePopup(popupAdd);
   validateAddWindow.disabledAddButton(); //тут выключаем кнопку Создать чтобы блокировать создание Enter'ом. Выносить эту строку в отдельную ф-цию не стал,больше строк будет чем сейчас
 }

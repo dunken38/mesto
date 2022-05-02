@@ -33,7 +33,8 @@ export class Card {
   }
   //удаление карточки,используется в слушателе корзины
   _removeCard() {
-    this._element.remove() // '= null' работало сразу как взял проект после ревью,но потом со временем перестало работать :) вернул на .remove
+    this._element.remove();
+    this._element = null; //+
   }
   //лайк
   _activateLike() {
