@@ -76,8 +76,7 @@ const createCardFormSubmit = (evt) => {
   };
   createCard(addInputWindow);
   closePopup(popupAdd);
-  const validateAddWindow = new FormValidator (validationObject,'#popupAdd'); //тут выключаем кнопку Создать чтобы блокировать создание Enter'ом. Выносить эту строку в отдельную ф-цию не стал,больше строк будет чем сейчас
-  validateAddWindow.disabledAddButton();
+  validateAddWindow.disabledAddButton(); //тут выключаем кнопку Создать чтобы блокировать создание Enter'ом. Выносить эту строку в отдельную ф-цию не стал,больше строк будет чем сейчас
 }
 
 //кнопка save с заменой полей из popup в profile
@@ -88,21 +87,29 @@ const getValueOfInputFormsEdit = (evt) => {
   closePopup(popupEdit);
 }
 
+//вынесена валидация полей Edit в корень чтобы класс создавался один раз
+//для блокироваки кнопки используется disabledAddButton
+const validateEditWindow = new FormValidator (validationObject,'#popupEdit');
+validateEditWindow.enableValidation();
+
 //что происходит при нажатии на кнопку Edit
 const openPopupOnEditButton = () => {
   inputNameEdit.value = profileInfoName.textContent; //получаем данные в форму из информации со страницы
   inputAboutEdit.value = profileInfoAbout.textContent;
   openPopup(popupEdit);
-  const validateEditWindow = new FormValidator (validationObject,'#popupEdit');
-  validateEditWindow.enableValidation();
+  validateEditWindow.resetErrors();
 }
+
+//вынесена валидация полей Add в корень чтобы класс создавался один раз
+//для блокироваки кнопки используется disabledAddButton
+const validateAddWindow = new FormValidator (validationObject,'#popupAdd');
+validateAddWindow.enableValidation();
 
 //что происходит при нажатии на кнопку Add
 const openPopupOnAddButton = () => {
   popupAddForm.reset();
   openPopup(popupAdd);
-  const validateAddWindow = new FormValidator (validationObject,'#popupAdd');
-  validateAddWindow.enableValidation();
+  validateAddWindow.resetErrors();
 }
 
 //слушатели

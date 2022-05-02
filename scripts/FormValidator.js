@@ -54,7 +54,7 @@ export class FormValidator {
     }
   };
 
-  disabledAddButton() {
+  disabledAddButton() { //возвращаем кнопку в disabled сразу после сабмита в окошке Add
     this._buttonElement.disabled=true;
   }
 
@@ -71,9 +71,9 @@ export class FormValidator {
     }
   };
 
-  resetErrors() {
+  resetErrors() { //чистим ошибки валидации
     this._inputList.forEach((inputElement) => {
-      _hideInputError(inputElement);
+      this._hideInputError(inputElement);
     });
   }
 
