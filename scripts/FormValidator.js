@@ -72,7 +72,9 @@ export class FormValidator {
   };
 
   resetErrors() {
-
+    this._inputList.forEach((inputElement) => {
+      _hideInputError(inputElement);
+    });
   }
 
   enableValidation() {
