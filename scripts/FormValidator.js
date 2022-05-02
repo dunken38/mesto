@@ -47,13 +47,16 @@ export class FormValidator {
     if (this._hasInvalidInput()) {
       // сделай кнопку неактивной
       this._buttonElement.classList.add(this._inactiveButtonClass);
-      this._buttonElement.disabled=true;
     } else {
       // иначе сделай кнопку активной
       this._buttonElement.classList.remove(this._inactiveButtonClass);
       this._buttonElement.disabled=false;
     }
   };
+
+  disabledAddButton() {
+    this._buttonElement.disabled=true;
+  }
 
   //проверяем валидацию
   _isValid (inputElement) {
@@ -67,6 +70,10 @@ export class FormValidator {
       this._hideInputError(inputElement);
     }
   };
+
+  resetErrors() {
+
+  }
 
   enableValidation() {
     // Для каждой формы вызовем функцию setEventListeners,

@@ -76,6 +76,8 @@ const createCardFormSubmit = (evt) => {
   };
   createCard(addInputWindow);
   closePopup(popupAdd);
+  const validateAddWindow = new FormValidator (validationObject,'#popupAdd'); //тут выключаем кнопку Создать чтобы блокировать создание Enter'ом. Выносить эту строку в отдельную ф-цию не стал,больше строк будет чем сейчас
+  validateAddWindow.disabledAddButton();
 }
 
 //кнопка save с заменой полей из popup в profile
