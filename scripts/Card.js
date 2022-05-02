@@ -1,3 +1,5 @@
+import { openPopup } from "./index.js";
+
 //создаем общий класс для создания карточек
 export class Card {
   constructor(data, cardSelector) {
@@ -31,7 +33,7 @@ export class Card {
   }
   //удаление карточки,используется в слушателе корзины
   _removeCard() {
-    this._element.remove();
+    this._element.remove() // '= null' работало сразу как взял проект после ревью,но потом со временем перестало работать :) вернул на .remove
   }
   //лайк
   _activateLike() {
@@ -42,7 +44,7 @@ export class Card {
     this._popupImage.src = this._link;
     this._popupImage.alt = this._name;
     this._popupImageText.textContent = this._name;
-    this._popupZoomImage.classList.add('popup_active');
+    openPopup(this._popupZoomImage);
   }
   //слушатели
   _setEventListeners() {
@@ -57,14 +59,5 @@ export class Card {
     this._galleryImage.addEventListener('click', () => {
       this._zoomGalleryImage(); 
     });
-  }
-}
-
-//наследуем от Card для создания новых карточек из окошка add
-export class UserCard extends Card {
-  constructor(data,cardSelector) {
-    super(data,cardSelector);
-    this._name = data.name.value; //тут достаем данные из полей в отличии от Card
-    this._link = data.link.value;
   }
 }

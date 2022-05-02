@@ -1,4 +1,4 @@
-import {Card, UserCard} from './Card.js';
+import {Card} from './Card.js';
 import {initialCards} from './Cards.js';
 import {FormValidator} from './FormValidator.js';
 
@@ -13,10 +13,10 @@ const popupEditForm = document.querySelector('[name=popup-edit-form]');
 const popupAddForm = document.querySelector('[name=popup-add-form]');
 const inputNameEdit = document.querySelector('[name=input-name-edit]'); 
 const inputAboutEdit = document.querySelector('[name=input-about-edit]');
-const addInputWindow = { //тут объект инпутов popup'а add для универсализации с объектом заготовленных карточек в Cards.js
-  name: document.querySelector('[name=input-name-add]'),
-  link: document.querySelector('[name=input-about-add]')
-}
+const inputNameAdd = document.querySelector('[name=input-name-add]');
+const inputAboutAdd = document.querySelector('[name=input-about-add]');
+
+
 const galleryElements = document.querySelector('.elements');
 const popupElements = document.querySelectorAll('.popup');
 const validationObject = {
@@ -30,13 +30,17 @@ const validationObject = {
 
 //теперь пишем функции
 //открываем окошки
-function openPopup(popup) {
-  popup.classList.add('popup_active'); 
+export function openPopup(popup) {
+  popup.classList.add('popup_active');
+  document.addEventListener('keydown',closePopupVia); //закрытие popup'ов
+  document.addEventListener('click',closePopupVia);
 }
 
 //закрываем окошки
 function closePopup(popup) {
   popup.classList.remove('popup_active'); 
+  document.removeEventListener('keydown',closePopupVia); //чистим закрытие popup'ов
+  document.removeEventListener('click',closePopupVia);
 }
 
 //делаем функцию с несколькими способами закрытия попапа
@@ -50,19 +54,27 @@ function closePopupVia(evt) {
   }
 }
 
+//тут функция где создаем класс userCard для последующего использования в любых карточках
+const createCard = (card) => {
+  const userCard = new Card(card, '#gallery');
+  const cardElement = userCard.generateCard();
+  galleryElements.prepend(cardElement);
+}
+
 //сделали прогон карточек из Cards.js и создали их при помощи класса Card
 initialCards.forEach((item) => {
-  const card = new Card(item, '#gallery');
-  const cardElement = card.generateCard();
-  galleryElements.prepend(cardElement);
+  createCard(item);
 })
 
-//создаем пользовательскую карточку при помощи класса UserCard
+//создаем пользовательскую карточку
 const createCardFormSubmit = (evt) => { 
   evt.preventDefault();
-  const card = new UserCard(addInputWindow, '#gallery');
-  const cardElement = card.generateCard();
-  galleryElements.prepend(cardElement);
+  const addInputWindow =
+  { //объект инпутов popup'а add внутри функции чтобы забирать актуальные значения полей inputNameAdd и inputAboutAdd,иначе undefined
+    name: inputNameAdd.value,
+    link: inputAboutAdd.value
+  };
+  createCard(addInputWindow);
   closePopup(popupAdd);
 }
 
@@ -85,8 +97,7 @@ const openPopupOnEditButton = () => {
 
 //что происходит при нажатии на кнопку Add
 const openPopupOnAddButton = () => {
-  addInputWindow.name.value = '';
-  addInputWindow.link.value = '';
+  popupAddForm.reset();
   openPopup(popupAdd);
   const validateAddWindow = new FormValidator (validationObject,'#popupAdd');
   validateAddWindow.enableValidation();
@@ -97,5 +108,3 @@ editButton.addEventListener('click',openPopupOnEditButton); //открываем
 addButton.addEventListener('click',openPopupOnAddButton); //открываем окошко popup по клику на add
 popupEditForm.addEventListener('submit',getValueOfInputFormsEdit,false); //закрываем окошко popup по клику на Сохранить.False добавлен для того чтобы форма не обновлялась.
 popupAddForm.addEventListener('submit',createCardFormSubmit,false);
-document.addEventListener('keydown',closePopupVia); //закрытие popup'ов
-document.addEventListener('click',closePopupVia);
