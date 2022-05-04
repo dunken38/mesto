@@ -15,9 +15,7 @@ const inputNameEdit = document.querySelector('[name=input-name-edit]');
 const inputAboutEdit = document.querySelector('[name=input-about-edit]');
 const inputNameAdd = document.querySelector('[name=input-name-add]');
 const inputAboutAdd = document.querySelector('[name=input-about-add]');
-
-
-const galleryElements = document.querySelector('.elements');
+//const galleryElements = document.querySelector('.elements');
 const popupElements = document.querySelectorAll('.popup');
 const validationObject = {
   formSelector: '.popup__form',
@@ -62,9 +60,9 @@ const createCard = (card) => {
 }
 
 //тут функция добавления карточек отдельно от создания экземпляра класса
-const pasteCard = (pastedCardElement) => {
+/*const pasteCard = (pastedCardElement) => {
   galleryElements.prepend(pastedCardElement);
-}
+}*/
 
 //сделали прогон карточек из Cards.js и создали их при помощи класса Card
 initialCards.forEach((item) => {
