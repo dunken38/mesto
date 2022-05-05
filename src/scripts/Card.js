@@ -1,5 +1,3 @@
-import { openPopup } from "./index.js";
-
 //создаем общий класс для создания карточек
 export class Card {
   constructor(data, cardSelector) {

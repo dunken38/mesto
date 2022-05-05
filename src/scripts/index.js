@@ -29,22 +29,24 @@ const validationObject = {
 };
 
 //теперь пишем функции
-//открываем окошки
-export function openPopup(popup) {
+//Достаем экземпляр Popup
+const createPopup = new Popup ()
+
+/*export function openPopup(popup) {
   popup.classList.add('popup_active');
   document.addEventListener('keydown',closePopupVia); //закрытие popup'ов
   document.addEventListener('click',closePopupVia);
-}
+}*/
 
 //закрываем окошки
-function closePopup(popup) {
+/*function closePopup(popup) {
   popup.classList.remove('popup_active'); 
   document.removeEventListener('keydown',closePopupVia); //чистим закрытие popup'ов
   document.removeEventListener('click',closePopupVia);
-}
+}*/
 
 //делаем функцию с несколькими способами закрытия попапа
-function closePopupVia(evt) {  
+/*function closePopupVia(evt) {  
   if ((evt.key === 'Escape')||(evt.target.classList.contains('popup'))||(evt.target.classList.contains('popup__cancel-button'))) {
     popupElements.forEach((popupElement) => {
       if (popupElement.classList.contains('popup_active')) {
@@ -52,7 +54,7 @@ function closePopupVia(evt) {
       }
     });
   }
-}
+}*/
 
 //тут функция где создаем класс userCard для последующего использования в любых карточках
 const createCard = (card) => {
@@ -68,16 +70,6 @@ const createSection = new Section({renderer: (item) => {
 
 //прогон-создание массива карточек из Cards.js
 createSection.renderItems(initialCards);
-
-//тут функция добавления карточек отдельно от создания экземпляра класса
-/*const pasteCard = (pastedCardElement) => {
-  galleryElements.prepend(pastedCardElement);
-}*/
-
-//сделали прогон карточек из Cards.js и создали их при помощи класса Card
-/*initialCards.forEach((item) => {
-  pasteCard(createCard(item)); //тут воткнул ф-цию добавления карточек
-})*/
 
 //создаем пользовательскую карточку
 const createCardFormSubmit = (evt) => { 
