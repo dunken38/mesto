@@ -1,18 +1,6 @@
-import { openPopup } from "./index.js";
-
-//создаем общий класс для создания карточек
-export class Card {
-  constructor(data, cardSelector) {
-    this._name = data.name;
-    this._link = data.link;
-    this._cardSelector = cardSelector;
-    this._element = this._getTemplate();
-    this._buttonLike = this._element.querySelector('.element__like');
-    this._galleryTrashButton = this._element.querySelector('.element__trash');
-    this._popupImage = document.querySelector('.popup__image');
-    this._popupImageText = document.querySelector('.popup__image-text');
-    this._galleryImage = this._element.querySelector('.element__image');
-    this._popupZoomImage = document.querySelector('#popupZoomImage');
+export class Popup {
+  constructor(popupSelector) {
+    this._popupSelector = document.querySelector(popupSelector);;
   }
   //достаем шаблон карточки
   _getTemplate() {

@@ -1,6 +1,8 @@
 import {Card} from './Card.js';
 import {initialCards} from './Cards.js';
 import {FormValidator} from './FormValidator.js';
+import {Section} from './Section.js';
+import {Popup} from './Popup.js'
 
 //объявляем переменные
 const profileInfoName = document.querySelector('.profile__info-name');
@@ -58,6 +60,14 @@ const createCard = (card) => {
   const cardElement = userCard.generateCard();
   return cardElement; //вернул CardElement чтобы можно было вынести отдельно ф-цию добавления карточек и затем использовать в ней текущую ф-цию
 }
+//создаем экземпляр класса Section
+const createSection = new Section({renderer: (item) => {
+    createSection.addItem(createCard(item));
+    }
+  } ,'.elements');
+
+//прогон-создание массива карточек из Cards.js
+createSection.renderItems(initialCards);
 
 //тут функция добавления карточек отдельно от создания экземпляра класса
 /*const pasteCard = (pastedCardElement) => {
@@ -65,9 +75,9 @@ const createCard = (card) => {
 }*/
 
 //сделали прогон карточек из Cards.js и создали их при помощи класса Card
-initialCards.forEach((item) => {
+/*initialCards.forEach((item) => {
   pasteCard(createCard(item)); //тут воткнул ф-цию добавления карточек
-})
+})*/
 
 //создаем пользовательскую карточку
 const createCardFormSubmit = (evt) => { 
@@ -77,7 +87,7 @@ const createCardFormSubmit = (evt) => {
     name: inputNameAdd.value,
     link: inputAboutAdd.value
   };
-  pasteCard(createCard(addInputWindow)); //тут воткнул ф-цию добавления карточек
+  createSection.addItem(createCard(addInputWindow)); //тут используем класс Section для создания карточки из попапа
   closePopup(popupAdd);
   validateAddWindow.disabledAddButton(); //тут выключаем кнопку Создать чтобы блокировать создание Enter'ом. Выносить эту строку в отдельную ф-цию не стал,больше строк будет чем сейчас
 }
