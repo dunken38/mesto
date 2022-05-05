@@ -7,8 +7,8 @@ export class Card {
     this._element = this._getTemplate();
     this._buttonLike = this._element.querySelector('.element__like');
     this._galleryTrashButton = this._element.querySelector('.element__trash');
-    this._popupImage = document.querySelector('.popup__image');
-    this._popupImageText = document.querySelector('.popup__image-text');
+    /*this._popupImage = document.querySelector('.popup__image');
+    this._popupImageText = document.querySelector('.popup__image-text');*/
     this._galleryImage = this._element.querySelector('.element__image');
     this._popupZoomImage = document.querySelector('#popupZoomImage');
   }
@@ -39,12 +39,7 @@ export class Card {
     this._buttonLike.classList.toggle('element__like_active');
   }
   //зум запихнул сюда же
-  _zoomGalleryImage() {
-    this._popupImage.src = this._link;
-    this._popupImage.alt = this._name;
-    this._popupImageText.textContent = this._name;
-    openPopup(this._popupZoomImage);
-  }
+  
   //слушатели
   _setEventListeners() {
     this._buttonLike.addEventListener('click', () => {
@@ -55,8 +50,8 @@ export class Card {
       this._removeCard();
     }); 
 
-    this._galleryImage.addEventListener('click', () => {
+    /*this._galleryImage.addEventListener('click', () => {
       this._zoomGalleryImage(); 
-    });
+    });*/
   }
 }
