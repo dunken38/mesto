@@ -19,7 +19,7 @@ const inputNameAdd = document.querySelector('[name=input-name-add]');
 const inputAboutAdd = document.querySelector('[name=input-about-add]');
 //const galleryElements = document.querySelector('.elements');
 const popupElements = document.querySelectorAll('.popup');
-const validationObject = {
+export const validationObject = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save-button',
@@ -72,7 +72,7 @@ const createSection = new Section({renderer: (item) => {
 createSection.renderItems(initialCards);
 
 //создаем пользовательскую карточку
-const createCardFormSubmit = (evt) => { 
+/*const createCardFormSubmit = (evt) => { 
   evt.preventDefault();
   const addInputWindow =
   { //объект инпутов popup'а add внутри функции чтобы забирать актуальные значения полей inputNameAdd и inputAboutAdd,иначе undefined
@@ -90,7 +90,7 @@ const getValueOfInputFormsEdit = (evt) => {
   profileInfoName.textContent = inputNameEdit.value;
   profileInfoAbout.textContent = inputAboutEdit.value;
   closePopup(popupEdit);
-}
+}*/
 
 //вынесена валидация полей Edit в корень чтобы класс создавался один раз
 //для блокироваки кнопки используется disabledAddButton
@@ -106,7 +106,6 @@ const openPopupOnEditButton = () => {
 }
 
 //вынесена валидация полей Add в корень чтобы класс создавался один раз
-//для блокироваки кнопки используется disabledAddButton
 const validateAddWindow = new FormValidator (validationObject,'#popupAdd');
 validateAddWindow.enableValidation();
 
