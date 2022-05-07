@@ -2,7 +2,6 @@ import {Card} from './Card.js';
 import {initialCards} from './Cards.js';
 import {FormValidator} from './FormValidator.js';
 import {Section} from './Section.js';
-import {Popup} from './Popup.js';
 import {PopupWithImage} from './PopupWithImage.js'
 import {PopupWithForm} from './PopupWithForm.js'
 import {UserInfo} from './UserInfo.js'
@@ -12,17 +11,11 @@ const profileInfoName = document.querySelector('.profile__info-name');
 const profileInfoAbout = document.querySelector('.profile__info-about');
 const editButton = document.querySelector('.profile__info-edit-button');
 const addButton = document.querySelector('.profile__add-button');
-const popupEdit = document.querySelector('#popupEdit');
-const popupAdd = document.querySelector('#popupAdd');
-const popupEditForm = document.querySelector('[name=popup-edit-form]');
-const popupAddForm = document.querySelector('[name=popup-add-form]');
 const inputNameEdit = document.querySelector('[name=inputNameEdit]'); 
 const inputAboutEdit = document.querySelector('[name=inputAboutEdit]');
-const inputNameAdd = document.querySelector('[name=input-name-add]');
-const inputAboutAdd = document.querySelector('[name=input-about-add]');
-const popupElements = document.querySelectorAll('.popup');
 export const validationObject = {
-  formSelector: '.popup__form',
+  formSelectorEdit: '[name=popup-edit-form]',
+  formSelectorAdd: '[name=popup-add-form]',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_inactive',
@@ -48,6 +41,7 @@ const createSection = new Section({renderer: (item) => { //создаем экз
   } ,'.elements');
 createSection.renderItems(initialCards); //прогон-создание массива карточек из Cards.js
 const openImage = new PopupWithImage('#popupZoomImage','.popup__image','.popup__image-text'); //тут экземпляр класса для зума карточки (попап карточки)
+openImage.setEventListeners();
 
 
 //тут достаем UserInfo для подготовки к замене данных
@@ -58,7 +52,7 @@ const userInfo = new UserInfo ({
 
 
 //тут экземпляр класса для попапа профиля и все что с ним связано
-const openEditWindow = new PopupWithForm('#popupEdit', {submitForm: (item) => {
+const openEditWindow = new PopupWithForm('#popupEdit', validationObject.formSelectorEdit, {submitForm: (item) => {
   openEditWindow.close();
   userInfo.setUserInfo(item);
 }});
@@ -68,7 +62,6 @@ const openPopupOnEditButton = () => { //что происходит при на�
   inputNameEdit.value = profileUserInfo.name; //получаем данные в форму из информации со страницы
   inputAboutEdit.value = profileUserInfo.about;
   openEditWindow.open();
-  
   validateEditWindow.resetErrors();
 }
 const validateEditWindow = new FormValidator (validationObject,'#popupEdit'); //вынесена валидация полей Edit в корень чтобы класс создавался один раз, для блокироваки кнопки используется disabledAddButton
@@ -76,9 +69,17 @@ validateEditWindow.enableValidation();
 
 
 //тут экземпляр класса для попапа добавления карточки и далее все что связано с ней
-const openAddWindow = new PopupWithForm('#popupAdd', {submitForm: () => {
+const openAddWindow = new PopupWithForm('#popupAdd', validationObject.formSelectorAdd, {submitForm: (item) => {
+   //тут воткнул ф-цию добавления карточек
+  const addCardObject =
+  { //объект инпутов popup'а add внутри функции чтобы забирать актуальные значения полей inputNameAdd и inputAboutAdd,иначе undefined
+    name: item.inputNameAdd,
+    link: item.inputAboutAdd
+  };
+  createSection.addItem(createCard(addCardObject));
   openAddWindow.close();
 }});
+openAddWindow.setEventListeners();
 const openPopupOnAddButton = () => { //что происходит при нажатии на кнопку Add
   openAddWindow.open();
   validateAddWindow.resetErrors();
