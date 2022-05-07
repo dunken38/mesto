@@ -3,7 +3,7 @@ import { validationObject } from './index.js'
 
 //Класс для создания попапа добавления карточек и редактирования данных о пользователе
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, submitForm) {
+  constructor(popupSelector, {submitForm}) {
     super(popupSelector);
     this._submitForm = submitForm;
     this._formList = document.querySelector(validationObject.formSelector);
@@ -17,13 +17,12 @@ export class PopupWithForm extends Popup {
     });
     return this._formObject;
   }
-
   close() {
     super.close();
-    this._formSelector.reset();
+    this._formList.reset();
   }
-
   setEventListeners() {
+    super.setEventListeners();
     this._formList.addEventListener('submit', evt => {
       evt.preventDefault();
       this._submitForm(this._getInputValues());
