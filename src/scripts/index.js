@@ -2,7 +2,10 @@ import {Card} from './Card.js';
 import {initialCards} from './Cards.js';
 import {FormValidator} from './FormValidator.js';
 import {Section} from './Section.js';
-import {Popup} from './Popup.js'
+import {Popup} from './Popup.js';
+import {PopupWithImage} from './PopupWithImage.js'
+import {PopupWithForm} from './PopupWithForm.js'
+import {UserInfo} from './UserInfo.js'
 
 //объявляем переменные
 const profileInfoName = document.querySelector('.profile__info-name');
@@ -28,37 +31,17 @@ export const validationObject = {
   errorClass: 'popup__input-error_active'
 };
 
-//теперь пишем функции
-//Достаем экземпляр Popup
-const createPopup = new Popup ()
-
-/*export function openPopup(popup) {
-  popup.classList.add('popup_active');
-  document.addEventListener('keydown',closePopupVia); //закрытие popup'ов
-  document.addEventListener('click',closePopupVia);
-}*/
-
-//закрываем окошки
-/*function closePopup(popup) {
-  popup.classList.remove('popup_active'); 
-  document.removeEventListener('keydown',closePopupVia); //чистим закрытие popup'ов
-  document.removeEventListener('click',closePopupVia);
-}*/
-
-//делаем функцию с несколькими способами закрытия попапа
-/*function closePopupVia(evt) {  
-  if ((evt.key === 'Escape')||(evt.target.classList.contains('popup'))||(evt.target.classList.contains('popup__cancel-button'))) {
-    popupElements.forEach((popupElement) => {
-      if (popupElement.classList.contains('popup_active')) {
-        closePopup(popupElement);
-      }
-    });
-  }
-}*/
+//тут пишем функции,достаем классы
+//тут экземпляр класса для зума карточки (попап карточки)
+const openImage = new PopupWithImage('#popupZoomImage','.popup__image','.popup__image-text');
 
 //тут функция где создаем класс userCard для последующего использования в любых карточках
 const createCard = (card) => {
-  const userCard = new Card(card, '#gallery');
+  const userCard = new Card(card, '#gallery', {
+    handleCardClick: () => {
+      openImage.open(card.name,card.link);
+    }
+  });
   const cardElement = userCard.generateCard();
   return cardElement; //вернул CardElement чтобы можно было вынести отдельно ф-цию добавления карточек и затем использовать в ней текущую ф-цию
 }
@@ -71,27 +54,6 @@ const createSection = new Section({renderer: (item) => {
 //прогон-создание массива карточек из Cards.js
 createSection.renderItems(initialCards);
 
-//создаем пользовательскую карточку
-/*const createCardFormSubmit = (evt) => { 
-  evt.preventDefault();
-  const addInputWindow =
-  { //объект инпутов popup'а add внутри функции чтобы забирать актуальные значения полей inputNameAdd и inputAboutAdd,иначе undefined
-    name: inputNameAdd.value,
-    link: inputAboutAdd.value
-  };
-  createSection.addItem(createCard(addInputWindow)); //тут используем класс Section для создания карточки из попапа
-  closePopup(popupAdd);
-  validateAddWindow.disabledAddButton(); //тут выключаем кнопку Создать чтобы блокировать создание Enter'ом. Выносить эту строку в отдельную ф-цию не стал,больше строк будет чем сейчас
-}
-
-//кнопка save с заменой полей из popup в profile
-const getValueOfInputFormsEdit = (evt) => { 
-  evt.preventDefault();
-  profileInfoName.textContent = inputNameEdit.value;
-  profileInfoAbout.textContent = inputAboutEdit.value;
-  closePopup(popupEdit);
-}*/
-
 //вынесена валидация полей Edit в корень чтобы класс создавался один раз
 //для блокироваки кнопки используется disabledAddButton
 const validateEditWindow = new FormValidator (validationObject,'#popupEdit');
@@ -101,7 +63,7 @@ validateEditWindow.enableValidation();
 const openPopupOnEditButton = () => {
   inputNameEdit.value = profileInfoName.textContent; //получаем данные в форму из информации со страницы
   inputAboutEdit.value = profileInfoAbout.textContent;
-  openPopup(popupEdit);
+  //openPopup(popupEdit);
   validateEditWindow.resetErrors();
 }
 
@@ -111,13 +73,11 @@ validateAddWindow.enableValidation();
 
 //что происходит при нажатии на кнопку Add
 const openPopupOnAddButton = () => {
-  popupAddForm.reset();
-  openPopup(popupAdd);
+  //popupAddForm.reset();
+  //openPopup(popupAdd);
   validateAddWindow.resetErrors();
 }
 
 //слушатели
 editButton.addEventListener('click',openPopupOnEditButton); //открываем окошко popup по клику на edit
 addButton.addEventListener('click',openPopupOnAddButton); //открываем окошко popup по клику на add
-popupEditForm.addEventListener('submit',getValueOfInputFormsEdit,false); //закрываем окошко popup по клику на Сохранить.False добавлен для того чтобы форма не обновлялась.
-popupAddForm.addEventListener('submit',createCardFormSubmit,false);

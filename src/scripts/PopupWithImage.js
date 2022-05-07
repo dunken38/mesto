@@ -7,7 +7,6 @@ export class PopupWithImage extends Popup {
     this._popupImage = document.querySelector(popupImageSelector);
     this._popupImageText = document.querySelector(popupImageTextSelector);
   }
-
   open(name,link) {
     super.open(); //берем метод из Popup class
     this._popupImage.src = link; //дальше подменяем поля картинки и имени из полей попапа add
