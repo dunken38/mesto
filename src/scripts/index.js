@@ -16,8 +16,8 @@ const popupEdit = document.querySelector('#popupEdit');
 const popupAdd = document.querySelector('#popupAdd');
 const popupEditForm = document.querySelector('[name=popup-edit-form]');
 const popupAddForm = document.querySelector('[name=popup-add-form]');
-const inputNameEdit = document.querySelector('[name=input-name-edit]'); 
-const inputAboutEdit = document.querySelector('[name=input-about-edit]');
+const inputNameEdit = document.querySelector('[name=inputNameEdit]'); 
+const inputAboutEdit = document.querySelector('[name=inputAboutEdit]');
 const inputNameAdd = document.querySelector('[name=input-name-add]');
 const inputAboutAdd = document.querySelector('[name=input-about-add]');
 const popupElements = document.querySelectorAll('.popup');
@@ -50,14 +50,25 @@ createSection.renderItems(initialCards); //прогон-создание мас�
 const openImage = new PopupWithImage('#popupZoomImage','.popup__image','.popup__image-text'); //тут экземпляр класса для зума карточки (попап карточки)
 
 
+//тут достаем UserInfo для подготовки к замене данных
+const userInfo = new UserInfo ({
+  profileInfoName: profileInfoName,
+  profileInfoAbout: profileInfoAbout
+});
+
+
 //тут экземпляр класса для попапа профиля и все что с ним связано
-const openEditWindow = new PopupWithForm('#popupEdit', {submitForm: () => {
+const openEditWindow = new PopupWithForm('#popupEdit', {submitForm: (item) => {
   openEditWindow.close();
+  userInfo.setUserInfo(item);
 }});
+openEditWindow.setEventListeners();
 const openPopupOnEditButton = () => { //что происходит при нажатии на кнопку Edit
-  inputNameEdit.value = profileInfoName.textContent; //получаем данные в форму из информации со страницы
-  inputAboutEdit.value = profileInfoAbout.textContent;
+  const profileUserInfo = userInfo.getUserInfo();
+  inputNameEdit.value = profileUserInfo.name; //получаем данные в форму из информации со страницы
+  inputAboutEdit.value = profileUserInfo.about;
   openEditWindow.open();
+  
   validateEditWindow.resetErrors();
 }
 const validateEditWindow = new FormValidator (validationObject,'#popupEdit'); //вынесена валидация полей Edit в корень чтобы класс создавался один раз, для блокироваки кнопки используется disabledAddButton

@@ -4,7 +4,6 @@ export class Popup {
   }
   //открытие попапа
   open() {
-    this.setEventListeners();
     this._popupSelector.classList.add('popup_active');
   }
   //закрытие попапа
