@@ -1,23 +1,20 @@
 export class Popup {
   constructor(popupSelector) {
-    this._popupSelector = document.querySelector(popupSelector);;
+    this._popupSelector = document.querySelector(popupSelector);
   }
   //открытие попапа
   open() {
     this._popupSelector.classList.add('popup_active');
-    document.addEventListener('keydown',(evt) => {
-      this._handleEscClose(evt);
-    }); 
+    document.addEventListener('keydown',this._handleEscClose); 
   }
   //закрытие попапа
   close() {
     this._popupSelector.classList.remove('popup_active');
-    document.removeEventListener('keydown',(evt) => {
-      this._handleEscClose(evt);
-    }); 
+    document.removeEventListener('keydown',this._handleEscClose);
   }
   //закрытие по Esc
-  _handleEscClose(evt) {
+  _handleEscClose = (evt) => {
+    console.log('1');
     if (evt.key === 'Escape') {
       this.close();
     }

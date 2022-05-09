@@ -34,8 +34,7 @@ const createCard = (card) => {
       openImage.open(card.name,card.link);
     }
   });
-  const cardElement = userCard.generateCard();
-  return cardElement; //вернул CardElement чтобы можно было вынести отдельно ф-цию добавления карточек и затем использовать в ней текущую ф-цию
+  return userCard.generateCard();
 }
 const createSection = new Section({renderer: (item) => { //создаем экземпляр класса Section
     createSection.addItem(createCard(item));
@@ -58,9 +57,9 @@ const openEditWindow = new PopupWithForm('.popup_type_edit', validationObject.fo
   userInfo.setUserInfo(item);
 }});
 const openPopupOnEditButton = () => { //что происходит при нажатии на кнопку Edit
-  const profileUserInfo = userInfo.getUserInfo();
-  inputNameEdit.value = profileUserInfo.name; //получаем данные в форму из информации со страницы
-  inputAboutEdit.value = profileUserInfo.about;
+  const {name, about} = userInfo.getUserInfo();
+  inputNameEdit.value = name; //получаем данные в форму из информации со страницы
+  inputAboutEdit.value = about;
   openEditWindow.open();
   validateEditWindow.resetErrors();
 }
@@ -71,12 +70,7 @@ validateEditWindow.enableValidation();
 //тут экземпляр класса для попапа добавления карточки и далее все что связано с ней
 const openAddWindow = new PopupWithForm('.popup_type_add', validationObject.formSelectorAdd, {submitForm: (item) => {
    //тут воткнул ф-цию добавления карточек
-  const addCardObject =
-  { //объект инпутов popup'а add внутри функции чтобы забирать актуальные значения полей inputNameAdd и inputAboutAdd,иначе undefined
-    name: item.inputNameAdd,
-    link: item.inputAboutAdd
-  };
-  createSection.addItem(createCard(addCardObject));
+  createSection.addItem(createCard(item));
   openAddWindow.close();
 }});
 const openPopupOnAddButton = () => { //что происходит при нажатии на кнопку Add
