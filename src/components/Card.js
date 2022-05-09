@@ -8,7 +8,7 @@ export class Card {
     this._buttonLike = this._element.querySelector('.element__like');
     this._galleryTrashButton = this._element.querySelector('.element__trash');
     this._galleryImage = this._element.querySelector('.element__image');
-    this._popupZoomImage = document.querySelector('#popupZoomImage');
+    this._popupZoomImage = document.querySelector('.popup_type_image');
     this._handleCardClick = handleCardClick;
   }
   //достаем шаблон карточки

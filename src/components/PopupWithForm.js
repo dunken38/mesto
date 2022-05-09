@@ -1,12 +1,12 @@
 import { Popup } from "./Popup.js";
-import { validationObject } from '../index.js'
+import { validationObject } from '../pages/index.js'
 
 //Класс для создания попапа добавления карточек и редактирования данных о пользователе
 export class PopupWithForm extends Popup {
   constructor(popupSelector, formSelector, {submitForm}) {
     super(popupSelector);
     this._submitForm = submitForm;
-    this._formList = document.querySelector(formSelector);
+    this._form = document.querySelector(formSelector);
     this._inputList = document.querySelectorAll(validationObject.inputSelector);
   }
   //собирает данные полей формы
@@ -19,11 +19,11 @@ export class PopupWithForm extends Popup {
   }
   close() {
     super.close();
-    this._formList.reset();
+    this._form.reset();
   }
   setEventListeners() {
     super.setEventListeners();
-    this._formList.addEventListener('submit', (evt) => {
+    this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._submitForm(this._getInputValues());
     });
