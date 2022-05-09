@@ -1,5 +1,5 @@
 import { Popup } from "./Popup.js";
-import { validationObject } from './index.js'
+import { validationObject } from '../index.js'
 
 //Класс для создания попапа добавления карточек и редактирования данных о пользователе
 export class PopupWithForm extends Popup {
