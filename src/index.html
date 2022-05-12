@@ -11,7 +11,9 @@
   </header>
   <main>
     <section class="profile">
-      <img src="<%=require('./images/kusto.png')%>" class="profile__avatar" alt="Изображение Жак-Ив Кусто">
+      <button class="profile__avatar-edit">
+        <img src="<%=require('./images/kusto.png')%>" class="profile__avatar" alt="Изображение Жак-Ив Кусто">
+      </button>
       <div class="profile__info">
         <h1 class="profile__info-name">Жак-Ив Кусто</h1>
         <button type="button" class="profile__info-edit-button" title="Редактировать"></button>
@@ -101,7 +103,10 @@
       <img class="element__image" alt="Изображение">
       <div class="element__description">
         <h2 class="element__text"></h2>
-        <button type="button" class="element__like"></button>
+        <div class="element__like-block">
+          <button type="button" class="element__like"></button>
+          <span class="element__like-counter">2</span>
+        </div>
       </div>
     </li>
   </template> 

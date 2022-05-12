@@ -17,15 +17,34 @@ export class Api {
         // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       });
-  } 
+  }
 
-  // другие методы работы с API
+  getUser() {
+
+  }
+
+  patchUser() {
+
+  }
+
+  postCard() {
+
+  }
+
+  deleteCard() {
+
+  }
+
+  putLikes() {
+
+  }
+
+  deleteLikes() {
+
+  }
+
+  patchAvatar() {
+    
+  }
 }
 
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-40',
-  headers: {
-    authorization: '2c648237-6fa7-446a-a733-c0b86e95b124',
-    'Content-Type': 'application/json'
-  }
-});

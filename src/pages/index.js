@@ -5,6 +5,7 @@ import {Section} from '../components/Section.js';
 import {PopupWithImage} from '../components/PopupWithImage.js'
 import {PopupWithForm} from '../components/PopupWithForm.js'
 import {UserInfo} from '../components/UserInfo.js'
+import {Api} from '../components/Api.js'
 import './index.css';
 
 //объявляем переменные
@@ -26,6 +27,15 @@ export const validationObject = {
 
 
 //тут пишем функции,достаем классы
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-40',
+  headers: {
+    authorization: '2c648237-6fa7-446a-a733-c0b86e95b124',
+    'Content-Type': 'application/json'
+  }
+});
+
 
 //тут функция где создаем класс userCard для последующего использования в любых карточках и все что связано с карточками
 const createCard = (card) => {
