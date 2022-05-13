@@ -1,8 +1,9 @@
 //создаем класс для управления профилем пользователя
 export class UserInfo {
-  constructor({profileInfoName,profileInfoAbout}) {
+  constructor({profileInfoName,profileInfoAbout,profileInfoAvatar}) {
     this._profileInfoName = profileInfoName;
     this._profileInfoAbout = profileInfoAbout;
+    this._profileInfoAvatar = profileInfoAvatar;
   }
   getUserInfo() {
     return { //тут объект с данными пользователя
@@ -12,6 +13,8 @@ export class UserInfo {
   }
   setUserInfo(item) {
     this._profileInfoName.textContent = item.inputNameEdit;
+    this._profileInfoAvatar.alt = item.inputNameEdit;
     this._profileInfoAbout.textContent = item.inputAboutEdit;
+    this._profileInfoAvatar.src = item.avatar;
   }
 }
