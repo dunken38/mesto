@@ -1,6 +1,6 @@
 //создаем общий класс для создания карточек
 export class Card {
-  constructor(data, currentUserId, cardSelector, {handleCardClick, handleDelete, handleLike}) {
+  constructor(data, currentUserId, cardSelector, {handleCardClick, handleLike, handleDelete}) {
     this._name = data.name;
     this._link = data.link;
     this._cardId = data._id;
@@ -10,12 +10,12 @@ export class Card {
     this._cardSelector = cardSelector;
     this._element = this._getTemplate();
     this._buttonLike = this._element.querySelector('.element__like');
-    this._likeCounter =  this._element.querySelector('element__like-counter');
+    this._likeCounter =  this._element.querySelector('.element__like-counter');
     this._galleryTrashButton = this._element.querySelector('.element__trash');
     this._galleryImage = this._element.querySelector('.element__image');
     this._popupZoomImage = document.querySelector('.popup_type_image');
     this._handleCardClick = handleCardClick;
-    this._hadleDelete = handleDelete;
+    this._handleDelete = handleDelete;
     this._handleLike = handleLike;
   }
   //достаем шаблон карточки
@@ -57,26 +57,26 @@ export class Card {
     this._likeCounter.textContent = this._likes.length;
     for(let i = 0; i < this._likes.length; i++) {
       if(this._likes[i]._id == this._currentUserId) {
-        this._buttonLike.classList.add('elements__like_active');
+        this._buttonLike.classList.add('element__like_active');
         break; 
       } else {
-        this._buttonLike.classList.remove('elements__like_active');
+        this._buttonLike.classList.remove('element__like_active');
       }
     }
   }
   //проверяем лайк
   checkLike() { 
-    return this._buttonLike.classList.contains('elements__like_active')
+    return this._buttonLike.classList.contains('element__like_active')
   }
   //слушатели
   _setEventListeners() {
     this._buttonLike.addEventListener('click', () => {
+      this._handleLike(this.checkLike());
       this._activateLikeIcon();
-      this._handleLike(this.checkLike())
     }); 
 
     this._galleryTrashButton.addEventListener('click', () => {
-      this._hadleDelete(this._cardId);
+      this._handleDelete(this._cardId);
     }); 
 
     this._galleryImage.addEventListener('click', () => {

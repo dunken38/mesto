@@ -47,8 +47,8 @@ const createCard = (card) => {
     handleCardClick: () => {
       openImage.open(card.name,card.link);
     },
-    handleLikeCard: (isLike) => {
-      if(isLike) {
+    handleLike: (isLiked) => {
+      if(isLiked) {
         api.deleteLikes(userCard.getId()).then((card) => {
           userCard.activateLike(card.likes)
         }).catch(err => {
@@ -62,9 +62,9 @@ const createCard = (card) => {
         })
       }
     },
-    handleDeleteCard: () => {
-      deleteCardWindow.setSubmitAction(() => {
-        api.removeCard(userCard.getId()).then(() => {
+    handleDelete: () => {
+      deleteCardWindow.setPopupSubmit(() => {
+        api.deleteCard(userCard.getId()).then(() => {
           userCard.removeCard();
           deleteCardWindow.close();
         }).catch(err => {
@@ -94,14 +94,15 @@ const userInfo = new UserInfo ({
   profileInfoAbout: profileInfoAbout,
   profileInfoAvatar: profileInfoAvatar
 });
+let currentUserId;
 Promise.all([
   api.getUser(),
   api.getInitialCards()
 ])
-.then(([userData, cards]) => {
-  userInfo.setUserInfo(userData);
-  userInfo.setUserAvatar(userData);
-  const currentUserId = userData._id;
+.then(([UserInfoArr, cards]) => {
+  userInfo.setUserInfo(UserInfoArr);
+  userInfo.setUserAvatar(UserInfoArr);
+  currentUserId = UserInfoArr._id;
   createSection.renderItems(cards);
 })
 .catch(err => {
@@ -111,13 +112,24 @@ Promise.all([
 
 //тут экземпляр класса для попапа профиля и все что с ним связано
 const openEditWindow = new PopupWithForm('.popup_type_edit', validationObject.formSelectorEdit, {submitForm: (item) => {
-  openEditWindow.close();
-  userInfo.setUserInfo(item);
+  openEditWindow.isLoading(true);
+  api.patchUser(item)
+  .then(result => {
+    console.log(result);
+    userInfo.setUserInfo(result);
+    openEditWindow.close();
+  })
+  .catch(err => {
+    console.log(err)
+  })
+  .finally(() => {
+    openEditWindow.isLoading(false);
+  })
 }});
 const openPopupOnEditButton = () => { //что происходит при нажатии на кнопку Edit
-  const {name, about} = userInfo.getUserInfo();
-  inputNameEdit.value = name; //получаем данные в форму из информации со страницы
-  inputAboutEdit.value = about;
+  const UserInfoArr = userInfo.getUserInfo();
+  inputNameEdit.value = UserInfoArr.name; //получаем данные в форму из информации со страницы
+  inputAboutEdit.value = UserInfoArr.about;
   openEditWindow.open();
   validateEditWindow.resetErrors();
 }
@@ -127,14 +139,17 @@ validateEditWindow.enableValidation();
 
 //тут экземпляр попапа аватара и все что с ним связано
 const openAvatarWindow = new PopupWithForm('.popup_type_avatar', validationObject.formSelectorAvatar, {submitForm: (item) => {
+  openAvatarWindow.isLoading(true);
   api.patchAvatar(item)
   .then(result => {
-    console.log(result);
     userInfo.setUserAvatar(result);
     openAvatarWindow.close();
   })
   .catch(err => {
     console.log(err)
+  })
+  .finally(() => {
+    openAvatarWindow.isLoading(false);
   })
 }});
 const openPopupAvatar = () => { //что происходит при нажатии на аватарку
@@ -147,9 +162,19 @@ validateAvatarWindow.enableValidation();
 
 //тут экземпляр класса для попапа добавления карточки и далее все что связано с ней
 const openAddWindow = new PopupWithForm('.popup_type_add', validationObject.formSelectorAdd, {submitForm: (item) => {
-   //тут воткнул ф-цию добавления карточек
-  createSection.addItem(createCard(item));
-  openAddWindow.close();
+  openAddWindow.isLoading(true);
+  api.postCard(item.name,item.link)
+  .then(result => {
+    console.log(result);
+    createSection.addItem(createCard(result));
+    openAddWindow.close();
+  })
+  .catch(err => {
+    console.log(err)
+  })
+  .finally(() => {
+    openAddWindow.isLoading(false);
+  })
 }});
 const openPopupOnAddButton = () => { //что происходит при нажатии на кнопку Add
   openAddWindow.open();
@@ -167,4 +192,4 @@ openEditWindow.setEventListeners();
 openImage.setEventListeners();
 openAddWindow.setEventListeners();
 openAvatarWindow.setEventListeners();
-//deleteCardWindow.setEventListeners();
+deleteCardWindow.setEventListeners();

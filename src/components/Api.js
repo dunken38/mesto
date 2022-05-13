@@ -37,30 +37,38 @@ export class Api {
       .then(this._fetchResult());
   }
 
-  patchUser() {
+  patchUser(item) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: this._authorization,
         'Content-Type': this._contentType
-      }
+      },
+      body: JSON.stringify({
+        name: item.inputNameEdit,
+        about: item.inputAboutEdit
+      })
     })
       .then(this._fetchResult());
   }
 
-  postCard() {
+  postCard(name,link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: {
         authorization: this._authorization,
         'Content-Type': this._contentType
-      }
+      },
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
     })
       .then(this._fetchResult());
   }
 
-  deleteCard() {
-    return fetch(`${this._baseUrl}/cards/cardId`, {
+  deleteCard(id) {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization,

@@ -12,11 +12,11 @@ export class UserInfo {
     }
   }
   setUserInfo(item) {
-    this._profileInfoName.textContent = item.inputNameEdit;
-    this._profileInfoAbout.textContent = item.inputAboutEdit;
+    this._profileInfoName.textContent = item.name;
+    this._profileInfoAbout.textContent = item.about;
   }
   setUserAvatar(item) {
-    this._profileInfoAvatar.alt = item.inputNameEdit;
+    this._profileInfoAvatar.alt = item.name;
     this._profileInfoAvatar.src = item.avatar;
   }
 }
