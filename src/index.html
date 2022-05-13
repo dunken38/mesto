@@ -12,7 +12,7 @@
   <main>
     <section class="profile">
       <button class="profile__avatar-edit">
-        <img src="<%=require('./images/kusto.png')%>" class="profile__avatar" alt="Изображение Жак-Ив Кусто">
+        <img class="profile__avatar" alt="Изображение Жак-Ив Кусто">
       </button>
       <div class="profile__info">
         <h1 class="profile__info-name">Жак-Ив Кусто</h1>
@@ -82,7 +82,7 @@
         <h2 class="popup__title">Обновить аватар</h2>
         <div class="popup__label">
           <input type="url" name="avatar" id="avatar" placeholder="Ссылка на картинку" required value="" class="popup__input popup__input_type_avatar">
-          <span class="about-add-error popup__input-error"></span>
+          <span class="avatar-error popup__input-error"></span>
         </div>
         <button type="submit" class="popup__save-button">Сохранить</button>
       </form>

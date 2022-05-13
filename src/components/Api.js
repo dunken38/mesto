@@ -2,7 +2,7 @@ export class Api {
   constructor({baseUrl,authorization,contentType}) {
     this._baseUrl = baseUrl;
     this._authorization = authorization;
-    this._contentType = contentType;
+    this._contentType = contentType
   }
 
   _fetchResult() {
@@ -92,15 +92,17 @@ export class Api {
       .then(this._fetchResult());
   }
 
-  patchAvatar() {
+  patchAvatar(item) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: this._authorization,
         'Content-Type': this._contentType
-      }
+      },
+      body: JSON.stringify({
+        avatar: item.avatar
+      })
     })
-      .then(this._fetchResult());    
+      .then(this._fetchResult());   
   }
 }
-
