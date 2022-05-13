@@ -1,50 +1,106 @@
 export class Api {
-  constructor(options) {
-    // тело конструктора
+  constructor({baseUrl,authorization,contentType}) {
+    this._baseUrl = baseUrl;
+    this._authorization = authorization;
+    this._contentType = contentType;
+  }
+
+  _fetchResult() {
+    return res => {
+      if (res.ok) {
+        return res.json();
+      }
+      // если ошибка, отклоняем промис
+      return Promise.reject(`Ошибка: ${res.status}`);
+    }
   }
 
   getInitialCards() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-40/cards', {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'GET',
       headers: {
-        authorization: '2c648237-6fa7-446a-a733-c0b86e95b124'
+        authorization: this._authorization,
+        'Content-Type': this._contentType
       }
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-  
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(this._fetchResult());
   }
 
   getUser() {
-
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'GET',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+      }
+    })
+      .then(this._fetchResult());
   }
 
   patchUser() {
-
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+      }
+    })
+      .then(this._fetchResult());
   }
 
   postCard() {
-
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+      }
+    })
+      .then(this._fetchResult());
   }
 
   deleteCard() {
-
+    return fetch(`${this._baseUrl}/cards/cardId`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+      }
+    })
+      .then(this._fetchResult());
   }
 
   putLikes() {
-
+    return fetch(`${this._baseUrl}/cards/cardId/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+      }
+    })
+      .then(this._fetchResult());
   }
 
   deleteLikes() {
-
+    return fetch(`${this._baseUrl}/cards/cardId/likes`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+      }
+    })
+      .then(this._fetchResult());
   }
 
   patchAvatar() {
-    
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': this._contentType
+      }
+    })
+      .then(this._fetchResult());    
   }
 }
 
