@@ -1,5 +1,4 @@
 import {Card} from '../components/Card.js';
-import {initialCards} from '../components/Cards.js';
 import {FormValidator} from '../components/FormValidator.js';
 import {Section} from '../components/Section.js';
 import {PopupWithImage} from '../components/PopupWithImage.js'
@@ -18,7 +17,6 @@ const addButton = document.querySelector('.profile__add-button');
 const avatarButton = document.querySelector('.profile__avatar-edit');
 const inputNameEdit = document.querySelector('.popup__input_type_name-edit'); 
 const inputAboutEdit = document.querySelector('.popup__input_type_about-edit');
-const inputAvatarEdit = document.querySelector('.popup__input_type_avatar');
 export const validationObject = {
   formSelectorEdit: '.popup__form_type_edit',
   formSelectorAdd: '.popup__form_type_add',
@@ -29,7 +27,6 @@ export const validationObject = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active'
 };
-
 
 //тут пишем функции,достаем классы
 
@@ -115,7 +112,6 @@ const openEditWindow = new PopupWithForm('.popup_type_edit', validationObject.fo
   openEditWindow.isLoading(true);
   api.patchUser(item)
   .then(result => {
-    console.log(result);
     userInfo.setUserInfo(result);
     openEditWindow.close();
   })
@@ -165,7 +161,6 @@ const openAddWindow = new PopupWithForm('.popup_type_add', validationObject.form
   openAddWindow.isLoading(true);
   api.postCard(item.name,item.link)
   .then(result => {
-    console.log(result);
     createSection.addItem(createCard(result));
     openAddWindow.close();
   })
