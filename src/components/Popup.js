@@ -1,6 +1,7 @@
 export class Popup {
   constructor(popupSelector) {
     this._popupSelector = document.querySelector(popupSelector);
+    this._popupSave = this._popupSelector.querySelector('.popup__save-button');
   }
   //открытие попапа
   open() {
@@ -18,6 +19,15 @@ export class Popup {
       this.close();
     }
   }  
+  isLoading(isLoading) {
+    if(isLoading) {
+      this._popupSave.textContent = 'Сохранение...'
+    } else if (this._popupSelector == 'popup_type_add'){
+      this._popupSave.textContent = 'Создать'
+    } else {
+      this._popupSave.textContent = 'Сохранить'
+    }
+  }
   //слушатели
   setEventListeners() {
     document.addEventListener('click',(evt) => {

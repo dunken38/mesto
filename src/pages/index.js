@@ -43,9 +43,35 @@ const api = new Api({
 
 //тут функция где создаем класс userCard для последующего использования в любых карточках и все что связано с карточками
 const createCard = (card) => {
-  const userCard = new Card(card, '.template_type_gallery', {
+  const userCard = new Card(card, currentUserId, '.template_type_gallery', {
     handleCardClick: () => {
       openImage.open(card.name,card.link);
+    },
+    handleLikeCard: (isLike) => {
+      if(isLike) {
+        api.deleteLikes(userCard.getId()).then((card) => {
+          userCard.activateLike(card.likes)
+        }).catch(err => {
+          console.log(err);
+        })
+      } else {
+        api.putLikes(userCard.getId()).then(card => {
+          userCard.activateLike(card.likes)
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    },
+    handleDeleteCard: () => {
+      deleteCardWindow.setSubmitAction(() => {
+        api.removeCard(userCard.getId()).then(() => {
+          userCard.removeCard();
+          deleteCardWindow.close();
+        }).catch(err => {
+          console.log(err)
+        })
+      });
+      deleteCardWindow.open();
     }
   });
   return userCard.generateCard();
@@ -54,12 +80,12 @@ const createSection = new Section({renderer: (item) => { //создаем экз
     createSection.addItem(createCard(item));
     }
   } ,'.elements');
-createSection.renderItems(initialCards); //прогон-создание массива карточек из Cards.js
+//createSection.renderItems(initialCards); //прогон-создание массива карточек из Cards.js
 const openImage = new PopupWithImage('.popup_type_image','.popup__image','.popup__image-text'); //тут экземпляр класса для зума карточки (попап карточки)
 
 
 //создаем экземпляр попапа для удаления карточки
-//const deleteCardWindow = new PopupRemove('.popup_type_remove');
+const deleteCardWindow = new PopupRemove('.popup_type_remove');
 
 
 //тут достаем UserInfo для подготовки к замене данных
@@ -68,6 +94,19 @@ const userInfo = new UserInfo ({
   profileInfoAbout: profileInfoAbout,
   profileInfoAvatar: profileInfoAvatar
 });
+Promise.all([
+  api.getUser(),
+  api.getInitialCards()
+])
+.then(([userData, cards]) => {
+  userInfo.setUserInfo(userData);
+  userInfo.setUserAvatar(userData);
+  const currentUserId = userData._id;
+  createSection.renderItems(cards);
+})
+.catch(err => {
+  console.log(`Error: ${err}`);
+})
 
 
 //тут экземпляр класса для попапа профиля и все что с ним связано

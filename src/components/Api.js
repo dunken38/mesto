@@ -70,8 +70,8 @@ export class Api {
       .then(this._fetchResult());
   }
 
-  putLikes() {
-    return fetch(`${this._baseUrl}/cards/cardId/likes`, {
+  putLikes(id) {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: 'PUT',
       headers: {
         authorization: this._authorization,
@@ -81,8 +81,8 @@ export class Api {
       .then(this._fetchResult());
   }
 
-  deleteLikes() {
-    return fetch(`${this._baseUrl}/cards/cardId/likes`, {
+  deleteLikes(id) {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization,
