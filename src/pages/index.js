@@ -34,7 +34,9 @@ const createCard = (card) => {
       if(isLiked) {
         api.deleteLikes(userCard.getId())
           .then(card => {
-            userCard.activateLike(card.likes)
+            userCard.activateLikeIcon();
+            userCard.activateLike(card.likes);
+            
           })
           .catch(err => {
             console.log(err);
@@ -42,7 +44,9 @@ const createCard = (card) => {
       } else {
         api.putLikes(userCard.getId())
           .then(card => {
-            userCard.activateLike(card.likes)
+            userCard.activateLikeIcon();
+            userCard.activateLike(card.likes);
+            
           })
           .catch(err => {
             console.log(err)

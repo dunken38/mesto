@@ -47,14 +47,16 @@ export class Card {
   getId() {
     return this._cardId;
   }
-  //лайк все в одном без отдельного переключения значка в слушателе
+  //лайк
+  activateLikeIcon() {
+    this._buttonLike.classList.toggle('element__like_active');
+  }
   activateLike(likesArray) {
     this._likes = likesArray;
     this._likeCounter.textContent = this._likes.length;
     for(let i = 0; i < this._likes.length; i++) {
       if(this._likes[i]._id == this._currentUserId) {
         this._buttonLike.classList.add('element__like_active');
-        break; 
       } else {
         this._buttonLike.classList.remove('element__like_active');
       }
