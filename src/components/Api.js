@@ -1,11 +1,10 @@
 export class Api {
-  constructor({baseUrl,authorization,contentType}) {
+  constructor({baseUrl,headers}) {
     this._baseUrl = baseUrl;
-    this._authorization = authorization;
-    this._contentType = contentType
+    this._headers = headers;
   }
 
-  _fetchResult() {
+  _checkResponse() {
     return res => {
       if (res.ok) {
         return res.json();
@@ -18,99 +17,75 @@ export class Api {
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'GET',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': this._contentType
-      }
+      headers: this._headers
     })
-      .then(this._fetchResult());
+      .then(this._checkResponse()); //тут работает только вызов
   }
 
   getUser() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': this._contentType
-      }
+      headers: this._headers
     })
-      .then(this._fetchResult());
+      .then(this._checkResponse());
   }
 
   patchUser(item) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': this._contentType
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: item.inputNameEdit,
         about: item.inputAboutEdit
       })
     })
-      .then(this._fetchResult());
+      .then(this._checkResponse());
   }
 
   postCard(name,link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': this._contentType
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: name,
         link: link
       })
     })
-      .then(this._fetchResult());
+      .then(this._checkResponse());
   }
 
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': this._contentType
-      }
+      headers: this._headers
     })
-      .then(this._fetchResult());
+      .then(this._checkResponse());
   }
 
   putLikes(id) {
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: 'PUT',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': this._contentType
-      }
+      headers: this._headers
     })
-      .then(this._fetchResult());
+      .then(this._checkResponse());
   }
 
   deleteLikes(id) {
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': this._contentType
-      }
+      headers: this._headers
     })
-      .then(this._fetchResult());
+      .then(this._checkResponse());
   }
 
   patchAvatar(item) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._authorization,
-        'Content-Type': this._contentType
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: item.avatar
       })
     })
-      .then(this._fetchResult());   
+      .then(this._checkResponse());   
   }
 }

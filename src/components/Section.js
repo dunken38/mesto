@@ -1,8 +1,8 @@
 //создаем класс для создания карточек
 export class Section {
-  constructor({renderer}, containerSelector) {
+  constructor({renderer}, container) {
     this._renderer = renderer;
-    this._containerSelector = document.querySelector(containerSelector);
+    this._container = document.querySelector(container);
   }
   //создание элементов
   renderItems(items) {
@@ -12,6 +12,6 @@ export class Section {
   }
   //вставка элементов
   addItem(pastedCardElement) {
-    this._containerSelector.prepend(pastedCardElement);
+    this._container.prepend(pastedCardElement);
   }
 }

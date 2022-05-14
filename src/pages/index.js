@@ -1,3 +1,7 @@
+//>поправил в основном критические замечания чтобы успеть в дедлайн
+
+import * as data from '../utils/constants.js'
+import { validationObject } from '../utils/constants.js'
 import {Card} from '../components/Card.js';
 import {FormValidator} from '../components/FormValidator.js';
 import {Section} from '../components/Section.js';
@@ -8,33 +12,15 @@ import {Api} from '../components/Api.js'
 import { PopupRemove } from '../components/PopupRemove.js';
 import './index.css';
 
-//объявляем переменные
-const profileInfoName = document.querySelector('.profile__info-name');
-const profileInfoAbout = document.querySelector('.profile__info-about');
-const profileInfoAvatar = document.querySelector('.profile__avatar');
-const editButton = document.querySelector('.profile__info-edit-button');
-const addButton = document.querySelector('.profile__add-button');
-const avatarButton = document.querySelector('.profile__avatar-edit');
-const inputNameEdit = document.querySelector('.popup__input_type_name-edit'); 
-const inputAboutEdit = document.querySelector('.popup__input_type_about-edit');
-export const validationObject = {
-  formSelectorEdit: '.popup__form_type_edit',
-  formSelectorAdd: '.popup__form_type_add',
-  formSelectorAvatar: '.popup__form_type_avatar',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-};
-
 //тут пишем функции,достаем классы
 
 //подаем на вход Api функций данные
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-40',
-  authorization: '2c648237-6fa7-446a-a733-c0b86e95b124',
-  contentType: 'application/json'
+  headers: {
+    authorization: '2c648237-6fa7-446a-a733-c0b86e95b124',
+    'Content-Type': 'application/json'
+  }
 });
 
 
@@ -46,17 +32,21 @@ const createCard = (card) => {
     },
     handleLike: (isLiked) => {
       if(isLiked) {
-        api.deleteLikes(userCard.getId()).then((card) => {
-          userCard.activateLike(card.likes)
-        }).catch(err => {
-          console.log(err);
-        })
+        api.deleteLikes(userCard.getId())
+          .then(card => {
+            userCard.activateLike(card.likes)
+          })
+          .catch(err => {
+            console.log(err);
+          })
       } else {
-        api.putLikes(userCard.getId()).then(card => {
-          userCard.activateLike(card.likes)
-        }).catch(err => {
-          console.log(err)
-        })
+        api.putLikes(userCard.getId())
+          .then(card => {
+            userCard.activateLike(card.likes)
+          })
+          .catch(err => {
+            console.log(err)
+          })
       }
     },
     handleDelete: () => {
@@ -87,19 +77,19 @@ const deleteCardWindow = new PopupRemove('.popup_type_remove');
 
 //тут достаем UserInfo для подготовки к замене данных
 const userInfo = new UserInfo ({
-  profileInfoName: profileInfoName,
-  profileInfoAbout: profileInfoAbout,
-  profileInfoAvatar: profileInfoAvatar
+  profileInfoName: data.profileInfoName,
+  profileInfoAbout: data.profileInfoAbout,
+  profileInfoAvatar: data.profileInfoAvatar
 });
 let currentUserId;
 Promise.all([
   api.getUser(),
   api.getInitialCards()
 ])
-.then(([UserInfoArr, cards]) => {
-  userInfo.setUserInfo(UserInfoArr);
-  userInfo.setUserAvatar(UserInfoArr);
-  currentUserId = UserInfoArr._id;
+.then(([userInfoArr, cards]) => {
+  userInfo.setUserInfo(userInfoArr);
+  userInfo.setUserAvatar(userInfoArr);
+  currentUserId = userInfoArr._id;
   createSection.renderItems(cards);
 })
 .catch(err => {
@@ -108,8 +98,8 @@ Promise.all([
 
 
 //тут экземпляр класса для попапа профиля и все что с ним связано
-const openEditWindow = new PopupWithForm('.popup_type_edit', validationObject.formSelectorEdit, {submitForm: (item) => {
-  openEditWindow.isLoading(true);
+const openEditWindow = new PopupWithForm('.popup_type_edit', validationObject.formEdit, {submitForm: (item) => {
+  openEditWindow.isLoading(true,'Сохранение...');
   api.patchUser(item)
   .then(result => {
     userInfo.setUserInfo(result);
@@ -119,23 +109,23 @@ const openEditWindow = new PopupWithForm('.popup_type_edit', validationObject.fo
     console.log(err)
   })
   .finally(() => {
-    openEditWindow.isLoading(false);
+    openEditWindow.isLoading(false,'Сохранить');
   })
 }});
 const openPopupOnEditButton = () => { //что происходит при нажатии на кнопку Edit
-  const UserInfoArr = userInfo.getUserInfo();
-  inputNameEdit.value = UserInfoArr.name; //получаем данные в форму из информации со страницы
-  inputAboutEdit.value = UserInfoArr.about;
+  const userInfoArr = userInfo.getUserInfo();
+  openEditWindow.setInputValues(userInfoArr);
   openEditWindow.open();
   validateEditWindow.resetErrors();
+  validateEditWindow.disabledAddButton(); //добавил метод для выключения кнопки сабмит (ниже для всех попапов)
 }
 const validateEditWindow = new FormValidator (validationObject,'.popup_type_edit'); //вынесена валидация полей Edit в корень чтобы класс создавался один раз, для блокироваки кнопки используется disabledAddButton
 validateEditWindow.enableValidation();
 
 
 //тут экземпляр попапа аватара и все что с ним связано
-const openAvatarWindow = new PopupWithForm('.popup_type_avatar', validationObject.formSelectorAvatar, {submitForm: (item) => {
-  openAvatarWindow.isLoading(true);
+const openAvatarWindow = new PopupWithForm('.popup_type_avatar', validationObject.formAvatar, {submitForm: (item) => {
+  openAvatarWindow.isLoading(true,'Сохранение...');
   api.patchAvatar(item)
   .then(result => {
     userInfo.setUserAvatar(result);
@@ -145,20 +135,21 @@ const openAvatarWindow = new PopupWithForm('.popup_type_avatar', validationObjec
     console.log(err)
   })
   .finally(() => {
-    openAvatarWindow.isLoading(false);
+    openAvatarWindow.isLoading(false,'Сохранить');
   })
 }});
 const openPopupAvatar = () => { //что происходит при нажатии на аватарку
   openAvatarWindow.open();
   validateAvatarWindow.resetErrors();
+  validateAvatarWindow.disabledAddButton();
 }
 const validateAvatarWindow = new FormValidator (validationObject,'.popup_type_avatar'); 
 validateAvatarWindow.enableValidation();
 
 
 //тут экземпляр класса для попапа добавления карточки и далее все что связано с ней
-const openAddWindow = new PopupWithForm('.popup_type_add', validationObject.formSelectorAdd, {submitForm: (item) => {
-  openAddWindow.isLoading(true);
+const openAddWindow = new PopupWithForm('.popup_type_add', validationObject.formAdd, {submitForm: (item) => {
+  openAddWindow.isLoading(true,'Создание...');
   api.postCard(item.name,item.link)
   .then(result => {
     createSection.addItem(createCard(result));
@@ -168,21 +159,22 @@ const openAddWindow = new PopupWithForm('.popup_type_add', validationObject.form
     console.log(err)
   })
   .finally(() => {
-    openAddWindow.isLoading(false);
+    openAddWindow.isLoading(false,'Создать');
   })
 }});
 const openPopupOnAddButton = () => { //что происходит при нажатии на кнопку Add
   openAddWindow.open();
   validateAddWindow.resetErrors();
+  validateAddWindow.disabledAddButton();
 }
 const validateAddWindow = new FormValidator (validationObject,'.popup_type_add');
 validateAddWindow.enableValidation();
 
 
 //слушатели
-editButton.addEventListener('click',openPopupOnEditButton); //открываем окошко popup по клику на edit
-addButton.addEventListener('click',openPopupOnAddButton); //открываем окошко popup по клику на add
-avatarButton.addEventListener('click',openPopupAvatar); //открываем окошко popup по клику на avatar
+data.editButton.addEventListener('click',openPopupOnEditButton); //открываем окошко popup по клику на edit
+data.addButton.addEventListener('click',openPopupOnAddButton); //открываем окошко popup по клику на add
+data.avatarButton.addEventListener('click',openPopupAvatar); //открываем окошко popup по клику на avatar
 openEditWindow.setEventListeners();
 openImage.setEventListeners();
 openAddWindow.setEventListeners();

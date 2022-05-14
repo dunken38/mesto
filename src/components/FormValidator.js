@@ -1,16 +1,13 @@
 export class FormValidator {
-  constructor (validationObject,formSelector) {
-    this._formSelector = formSelector;
-    this._formElement = document.querySelector(formSelector);
-    this._inputSelector = validationObject.inputSelector;
-    this._inputInvaildSelector = validationObject.inputInvaildSelector;
-    this._submitButtonSelector = validationObject.submitButtonSelector;
+  constructor (validationObject,formClass) {
+    this._formElement = document.querySelector(formClass);
+    this._input = validationObject.input;
+    this._submitButton = validationObject.submitButton;
     this._inactiveButtonClass = validationObject.inactiveButtonClass;
     this._errorClass = validationObject.errorClass;
     this._inputErrorClass = validationObject.inputErrorClass;
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-    this._errorList =  this._formElement.querySelectorAll(validationObject.inputErrorClass)
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._input));
+    this._buttonElement = this._formElement.querySelector(this._submitButton);
   }
 
   // Функция, которая добавляет класс с ошибкой

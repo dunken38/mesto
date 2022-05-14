@@ -7,8 +7,8 @@ export class UserInfo {
   }
   getUserInfo() {
     return { //тут объект с данными пользователя
-      name: this._profileInfoName.textContent,
-      about: this._profileInfoAbout.textContent
+      inputNameEdit: this._profileInfoName.textContent,
+      inputAboutEdit: this._profileInfoAbout.textContent
     }
   }
   setUserInfo(item) {
